@@ -1,20 +1,21 @@
 ### 0.회원가입 - ADMIN
-POST http://13.209.247.218/signup
+POST http://localhost:8080/signup
 Content-Type: application/json
 
 {
-  "email":"admin@test.com",
+  "email":"user@test.com",
   "password":"@Qkrwjdals96",
+  "password2": "@Qkrwjdals96",
   "username": "administrator",
   "address" : "111-400",
-  "phoneNumber": "010-1111-1111",
+  "phoneNumber": "010-1111-1111"
 }
 
 ### 1.로그인후 토큰 받기
-POST http://localhost:8080/api/signin
+POST http://localhost:8080/signin
 Content-Type: application/json
 
 {
-  "email":"admin@test.com",
-  "password":"1234"
+  "username":"user@test.com",
+  "password":"@Qkrwjdals96"
 }

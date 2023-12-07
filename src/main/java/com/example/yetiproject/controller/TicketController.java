@@ -2,6 +2,8 @@ package com.example.yetiproject.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,12 +45,12 @@ public class TicketController {
 	// TODO. user jwt 토큰 받기 필요
 	// 예매 하기
 	@PostMapping("/reserve/{ticketId}")
-	public ResponseEntity reserveTicket(@PathVariable(name = "ticketId") Long ticketId, @RequestBody TicketRequestDto ticketRequestDto){
+	public ApiResponse reserveTicket(@PathVariable(name = "ticketId") Long ticketId, @RequestBody TicketRequestDto ticketRequestDto) {
 		log.info("TicketController ticket_id = {}", ticketId);
-		return new ResponseEntity(ticketService.reserveTicket(ticketId, ticketRequestDto), HttpStatus.OK);
-
-
+		return ApiResponse.success("예매가 완료되었습니다.", ticketService.reserveTicket(ticketId, ticketRequestDto));
+	}
 	// TODO. user jwt 토큰 받기 필요
+
 	// 예매 취소
 	@DeleteMapping("/{ticketId}")
 	public ApiResponse cancelTicket(@PathVariable(name = "ticketId") Long ticketId){
