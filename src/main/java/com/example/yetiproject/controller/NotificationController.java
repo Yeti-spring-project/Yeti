@@ -25,4 +25,9 @@ public class NotificationController {
 		@RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
 		return notificationService.subscribe(userDetails.getUser().getUserId(), lastEventId);
 	}
+
+	@GetMapping("/")
+	public void abc(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+		notificationService.send("sf", userDetails.getUser());
+	}
 }

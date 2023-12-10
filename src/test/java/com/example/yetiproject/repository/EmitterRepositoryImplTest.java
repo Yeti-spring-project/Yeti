@@ -60,7 +60,6 @@ class EmitterRepositoryImplTest {
 		String emitterId3 = userId + "_" + System.currentTimeMillis();
 		emitterRepository.save(emitterId3, new SseEmitter(DEFAULT_TIMEOUT));
 
-
 		//when
 		Map<String, SseEmitter> ActualResult = emitterRepository.findAllEmitterStartWithByUserId(String.valueOf(userId));
 

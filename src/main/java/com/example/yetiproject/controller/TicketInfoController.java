@@ -21,17 +21,17 @@ public class TicketInfoController {
     }
 
     @GetMapping("/{id}")
-    public ApiResponse<TicketInfoResponseDto> getTicketInfo(@PathVariable Long id){
+    public ApiResponse<TicketInfoResponseDto> getTicketInfo(@PathVariable(name = "id") Long id){
         return ApiResponse.success("티켓 조회에 성공하였습니다.", ticketInfoService.getTicketInfo(id));
     }
 
     @PutMapping("/{id}")
-    public ApiResponse<TicketInfoResponseDto> updateTicketInfo(@PathVariable Long id, @RequestBody TicketInfoRequestDto requestDto) {
+    public ApiResponse<TicketInfoResponseDto> updateTicketInfo(@PathVariable(name = "id") Long id, @RequestBody TicketInfoRequestDto requestDto) {
         return ApiResponse.success("티켓 수정에 성공하였습니다.", ticketInfoService.updateTicketInfo(id, requestDto));
     }
 
     @DeleteMapping("/{id}")
-    public ApiResponse deleteTicketInfo(@PathVariable Long id) {
+    public ApiResponse deleteTicketInfo(@PathVariable(name = "id") Long id) {
         return ApiResponse.successWithNoContent(ticketInfoService.deleteTicketInfo(id));
     }
 

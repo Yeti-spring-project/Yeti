@@ -1,5 +1,5 @@
 ### 0.회원가입 - ADMIN
-POST http://localhost:8080/signup
+POST http://localhost:8080/api/user/signup
 Content-Type: application/json
 
 {
@@ -12,7 +12,7 @@ Content-Type: application/json
 }
 
 ### 1.로그인후 토큰 받기
-POST http://localhost:8080/signin
+POST http://localhost:8080/api/user/signin
 Content-Type: application/json
 
 {

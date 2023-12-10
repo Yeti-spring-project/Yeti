@@ -39,14 +39,15 @@ public class User {
 
 	private String address;
 
-	public User(UserSignupRequestDto requestDto) {
+	public User(UserSignupRequestDto requestDto, String encodedPassword) {
 		this.email = requestDto.getEmail();
+		this.password = encodedPassword;
 		this.username = requestDto.getUsername();
 		this.phoneNumber = requestDto.getPhoneNumber();
 		this.address = requestDto.getAddress();
 	}
 
-	public void updatePassword(String encodedPassword) {
-		this.password = encodedPassword;
-	}
+//	public void updatePassword(String encodedPassword) {
+//		this.password = encodedPassword;
+//	}
 }

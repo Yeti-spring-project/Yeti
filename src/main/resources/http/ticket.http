@@ -1,5 +1,5 @@
 ### 1.로그인후 토큰 받기
-POST http://localhost:8080/signin
+POST http://localhost:8080/api/user/signin
 Content-Type: application/json
 
 {
@@ -17,23 +17,22 @@ Content-Type: application/json
 Authorization: {{access_token}}
 
 ### 2. 예매한 티켓 상세 조회
-GET http://localhost:8080/api/mytickets/userId/5/ticketId/1
+GET http://localhost:8080/api/mytickets/ticketId/4
 Authorization: {{access_token}}
 
 ### 3. 티켓 예매하기
-POST http://localhost:8080/api/mytickets/reserve/1
+POST http://localhost:8080/api/mytickets/reserve
 Content-Type: application/json
 Authorization: {{access_token}}
 
 {
-  "userId": 5,
   "ticketInfoId" : 1,
   "posX" : 12,
-  "posY" : 16
+  "posY" : 18
 }
 
-### 4. 예매한 티켓 상세 조회
-DELETE http://localhost:8080/api/mytickets/1
+### 4. 예매한 티켓 취소하기
+DELETE http://localhost:8080/api/mytickets/2
 Authorization: {{access_token}}
 
 

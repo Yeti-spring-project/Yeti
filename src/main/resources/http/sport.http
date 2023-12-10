@@ -1,5 +1,5 @@
 ### 1.로그인후 토큰 받기
-POST http://localhost:8080/signin
+POST http://localhost:8080/api/user/signin
 Content-Type: application/json
 
 {

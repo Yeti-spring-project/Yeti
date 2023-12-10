@@ -1,6 +1,8 @@
 package com.example.yetiproject.entity;
 
 import com.example.yetiproject.dto.ticketinfo.TicketInfoRequestDto;
+import com.example.yetiproject.exception.entity.TicketInfo.OutOfStockException;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -47,4 +49,11 @@ public class TicketInfo {
         this.openDate = requestDto.getOpenDate();
         this.closeDate = requestDto.getCloseDate();
     }
+
+	public void updateStock(Long amount) {
+        if (this.stock + amount < 0) {
+            throw new OutOfStockException("재고 소진");
+        }
+        this.stock += amount;
+	}
 }
