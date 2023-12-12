@@ -26,6 +26,7 @@ import com.example.yetiproject.entity.Ticket;
 import com.example.yetiproject.entity.TicketInfo;
 import com.example.yetiproject.entity.User;
 import com.example.yetiproject.exception.entity.Ticket.TicketReserveException;
+import com.example.yetiproject.mock.WithCustomMockUser;
 import com.example.yetiproject.repository.TicketInfoRepository;
 import com.example.yetiproject.repository.TicketRepository;
 
@@ -54,6 +55,7 @@ public class TicketServiceTest {
 	}
 
 	@Test
+	@WithCustomMockUser
 	@DisplayName("예매하기")
 	void test(){
 		//given
@@ -73,11 +75,14 @@ public class TicketServiceTest {
 		given(ticketInfoRepository.findById(ticketRequestDto.getTicketInfoId())).willReturn(Optional.of(ticketInfo));
 		Ticket ticket = new Ticket(user, ticketInfo, ticketRequestDto);
 		// 예외 테스트를 위해 Repository의 save 메소드에서 예외 던지도록 설정
-		doThrow(new RuntimeException("예외 발생")).when(ticketRepository).save(ticket);
+		//doThrow(new RuntimeException("예외 발생")).when(ticketRepository).save(ticket);
 
 		try {
 			TicketResponseDto result = ticketService.reserveTicket(user, ticketRequestDto);
 			assertNotNull(result);
+			System.out.println(result.getUserId());
+			System.out.println(result.getTicketInfo().getTicketPrice());
+
 		} catch (TicketReserveException e) {
 			// 예외가 발생한 경우
 			assertEquals("예약을 할 수 없습니다.", e.getMessage());
@@ -85,20 +90,4 @@ public class TicketServiceTest {
 
 	}
 
-	// @Test
-	// @DisplayName("예매 취소")
-	// void test2(){
-	// 	//given
-	// 	Long ticketId = 3L;
-	// 	Ticket ticket = Ticket.builder().posY(17L).build();
-	// 	given(ticketRepository.findById(ticketId)).willReturn(Optional.of(ticket));
-	//
-	// 	//when
-	// 	ResponseEntity msg = ticketService.cancelUserTicket(user, ticketId);
-	//
-	// 	//then
-	// 	verify(ticketRepository, times(1)).findById(ticketId);
-	// 	assertEquals("<200 OK OK,해당 티켓을 취소하였습니다.,[]>", msg.toString());
-	//
-	// }
 }

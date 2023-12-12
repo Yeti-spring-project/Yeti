@@ -3,6 +3,7 @@ package com.example.yetiproject.service;
 import java.util.List;
 import java.util.Objects;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.example.yetiproject.dto.ticket.TicketRequestDto;
@@ -25,6 +26,8 @@ import lombok.RequiredArgsConstructor;
 public class TicketService {
 	private final TicketRepository ticketRepository;
 	private final TicketInfoRepository ticketInfoRepository;
+
+
 	public List<TicketResponseDto> getUserTicketList(User user) {
 		return ticketRepository.findUserTicketList(user.getUserId()).stream().map(TicketResponseDto::new).toList();
 	}
