@@ -13,7 +13,10 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Configuration
+@Slf4j(topic = "KafkaProducer")
 public class KafkaProducerConfig {
 	@Value("${kafka.host}")
 	private String host;
@@ -23,7 +26,8 @@ public class KafkaProducerConfig {
 	public ProducerFactory<String, Long> producerFactory(){
 		Map<String, Object> config = new HashMap<>();
 
-		config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, host+":"+port);
+		config.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+		log.info("Your URL = "+ host+":"+port);
 		config.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 		config.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, LongSerializer.class);
 

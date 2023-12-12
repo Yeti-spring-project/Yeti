@@ -1,12 +1,13 @@
 package com.example.yetiproject.service;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.*;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -15,32 +16,29 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.ResponseEntity;
 
 import com.example.yetiproject.dto.ticket.TicketRequestDto;
-import com.example.yetiproject.dto.ticket.TicketResponseDto;
-import com.example.yetiproject.dto.ticketinfo.TicketInfoRequestDto;
 import com.example.yetiproject.entity.Sports;
 import com.example.yetiproject.entity.Stadium;
 import com.example.yetiproject.entity.Ticket;
 import com.example.yetiproject.entity.TicketInfo;
 import com.example.yetiproject.entity.User;
-import com.example.yetiproject.exception.entity.Ticket.TicketReserveException;
+import com.example.yetiproject.kafka.service.TicketReserveService;
 import com.example.yetiproject.mock.WithCustomMockUser;
 import com.example.yetiproject.repository.TicketInfoRepository;
 import com.example.yetiproject.repository.TicketRepository;
 
 @ExtendWith(MockitoExtension.class)
-public class TicketServiceTest {
+public class TicketConcurrTest {
 	@InjectMocks
-	private TicketService ticketService;
-	@Mock
-	private TicketRepository ticketRepository;
+	TicketReserveService ticketReserveService;
 	@Mock
 	private TicketInfoRepository ticketInfoRepository;
+	@Mock
+	private TicketRepository ticketRepository;
 
 	private static TicketRequestDto ticketRequestDto;
-	private static User user;
+
 	@BeforeAll
 	static void beforeAll() {
 		ticketRequestDto = TicketRequestDto.builder()
@@ -48,16 +46,12 @@ public class TicketServiceTest {
 			.posX(12L)
 			.posY(14L)
 			.build();
-		user = User.builder()
-			.userId(1L)
-			.username("userTest")
-			.build();
 	}
 
 	@Test
 	@WithCustomMockUser
-	@DisplayName("예매하기")
-	void test(){
+	@DisplayName("Kafka 여러명 예매하기")
+	void test() throws InterruptedException {
 		//given
 		LocalDateTime openDateTime = LocalDateTime.of(2023, 12, 8, 12, 0); // 원하는 날짜와 시간으로 설정
 		LocalDateTime closeDateTime = LocalDateTime.of(2023, 12, 10, 18, 0); // 원하는 날짜와 시간으로 설정
@@ -66,25 +60,33 @@ public class TicketServiceTest {
 		Sports sports = Sports.builder().sportId(1L).stadium(stadium).build();
 		TicketInfo ticketInfo = TicketInfo.builder()
 			.sports(sports)
+			.ticketInfoId(1L)
 			.openDate(openDateTime)
 			.closeDate(closeDateTime)
 			.ticketPrice(10000L)
 			.stock(100L)
 			.build();
 
-		given(ticketInfoRepository.findById(ticketRequestDto.getTicketInfoId())).willReturn(Optional.of(ticketInfo));
-		Ticket ticket = new Ticket(user, ticketInfo, ticketRequestDto);
+		//given(ticketInfoRepository.findById(ticketRequestDto.getTicketInfoId())).willReturn(Optional.of(ticketInfo));
 
-		try {
-			TicketResponseDto result = ticketService.reserveTicket(user, ticketRequestDto);
-			assertNotNull(result);
-			System.out.println(result.getUserId());
-			System.out.println(result.getTicketInfo().getTicketPrice());
+		int threadCount = 1000; //1000명의 동시 접속자;
+		ExecutorService executorService = Executors.newFixedThreadPool(32); //쓰레드풀 32
+		//다른 스레드에서 수행해주는 작업을 기다려주는 클래스
+		CountDownLatch latch = new CountDownLatch(threadCount);
 
-		} catch (TicketReserveException e) {
-			// 예외가 발생한 경우
-			assertEquals("예약을 할 수 없습니다.", e.getMessage());
+		for( int i = 0; i < threadCount; i++){
+			long userId = i;
+			executorService.submit(() -> {
+				try{
+					ticketReserveService.reserve(userId, ticketInfo.getTicketInfoId());
+				}finally {
+					latch.countDown();
+				}
+			});
 		}
+
+		latch.await();
+		long count = ticketRepository.count();
 
 	}
 
