@@ -20,8 +20,10 @@ import com.example.yetiproject.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j(topic = "TicketService")
 @RequiredArgsConstructor
 public class TicketService {
 	private final TicketRepository ticketRepository;
@@ -40,12 +42,13 @@ public class TicketService {
 	@Transactional
 	public TicketResponseDto reserveTicket(User user, TicketRequestDto ticketRequestDto) {
 		TicketInfo ticketInfo = ticketInfoRepository.findById(ticketRequestDto.getTicketInfoId()).get();
+		log.info("UserId : " + user.getUserId());
 		Ticket ticket = new Ticket(user, ticketInfo, ticketRequestDto);
 		try {
 			ticketInfo.updateStock(-1L); // 티켓 총 개수 차감
 			ticketRepository.save(ticket);
 		}catch (Exception e){
-			throw new TicketReserveException("예약을 할 수 없습니다.");
+			throw new TicketReserveException("매진되었습니다.");
 		}
 		return new TicketResponseDto(ticket);
 	}
