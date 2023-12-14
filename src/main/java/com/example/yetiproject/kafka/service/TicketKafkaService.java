@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.yetiproject.dto.ticket.TicketRequestDto;
 import com.example.yetiproject.kafka.producer.ReserveTicketProducer;
+import com.example.yetiproject.repository.TicketInfoRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

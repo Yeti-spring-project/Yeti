@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class StockCountRepository {
 	private final RedisTemplate<String, String> redisTemplate;
-
 	public Long increment(){
 		return redisTemplate
 			.opsForValue()

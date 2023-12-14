@@ -46,7 +46,8 @@ public class TicketService {
 			ticketInfo.updateStock(-1L); // 티켓 총 개수 차감 incr
 			ticketRepository.save(ticket);
 		}catch (Exception e){
-			throw new TicketReserveException("매진되었습니다.");
+			//throw new TicketReserveException("매진되었습니다.");
+			log.error(e.getMessage());
 		}
 		return new TicketResponseDto(ticket);
 	}
