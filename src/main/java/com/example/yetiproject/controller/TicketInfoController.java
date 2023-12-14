@@ -7,6 +7,8 @@ import com.example.yetiproject.service.TicketInfoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/tickets")
 @RequiredArgsConstructor
@@ -18,6 +20,11 @@ public class TicketInfoController {
     @PostMapping("")
     public ApiResponse<TicketInfoResponseDto> createTicketInfo(@RequestBody TicketInfoRequestDto requestDto) {
         return ApiResponse.success("티켓 생성에 성공하였습니다.", ticketInfoService.createTicketInfo(requestDto));
+    }
+
+    @GetMapping("")
+    public ApiResponse<List<TicketInfoResponseDto>> getTicketInfoList() {
+        return ApiResponse.success("티켓 리스트 조회에 성공하였습니다.", ticketInfoService.getTicketInfoList());
     }
 
     @GetMapping("/{id}")
