@@ -45,7 +45,7 @@ public class TicketService {
 		log.info("UserId : " + user.getUserId());
 		Ticket ticket = new Ticket(user, ticketInfo, ticketRequestDto);
 		try {
-			ticketInfo.updateStock(-1L); // 티켓 총 개수 차감
+			ticketInfo.updateStock(-1L); // 티켓 총 개수 차감 incr
 			ticketRepository.save(ticket);
 		}catch (Exception e){
 			throw new TicketReserveException("매진되었습니다.");

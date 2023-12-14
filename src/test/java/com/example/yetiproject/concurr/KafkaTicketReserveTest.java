@@ -1,4 +1,4 @@
-package com.example.yetiproject.service;
+package com.example.yetiproject.concurr;
 
 import static org.assertj.core.api.Assertions.*;
 

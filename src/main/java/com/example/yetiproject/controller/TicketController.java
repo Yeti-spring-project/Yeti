@@ -18,6 +18,7 @@ import com.example.yetiproject.auth.security.UserDetailsImpl;
 import com.example.yetiproject.dto.ApiResponse;
 import com.example.yetiproject.dto.ticket.TicketRequestDto;
 import com.example.yetiproject.dto.ticket.TicketResponseDto;
+import com.example.yetiproject.kafka.service.TicketKafkaService;
 import com.example.yetiproject.service.TicketService;
 
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ import lombok.extern.slf4j.Slf4j;
 public class TicketController {
 	private final TicketService ticketService;
 	private final RedissonLockTicketFacade redissonLockTicketFacade;
+	private final TicketKafkaService ticketKafkaService;
 
 	// 예매한 티켓 목록 조회
 	@GetMapping("")
@@ -49,7 +51,9 @@ public class TicketController {
 	@PostMapping("/reserve")
 	public ApiResponse reserveTicket(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody TicketRequestDto ticketRequestDto) {
 		log.info("TicketController reserveTicket");
-		return ApiResponse.success("예매가 완료되었습니다.", redissonLockTicketFacade.reserveTicket(userDetails, ticketRequestDto));
+		//return ApiResponse.success("예매가 완료되었습니다.", redissonLockTicketFacade.reserveTicket(userDetails, ticketRequestDto));
+		ticketKafkaService.sendReserveTicket(userDetails.getUser().getUserId(), ticketRequestDto);
+		return ApiResponse.success("예매가 완료되었습니다.", null);
 	}
 
 	// 예매 취소

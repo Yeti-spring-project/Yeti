@@ -22,7 +22,7 @@ public class ReserveTicketProducer {
 		try{
 			ticketRequestDto.setUserId(userId);
 			String jsonObject = objectMapper.writeValueAsString(ticketRequestDto);
-			kafkaTemplate.send("ticketReserve", jsonObject);
+			kafkaTemplate.send("ticketReserveUser", jsonObject);
 		}catch (Exception e){
 			e.printStackTrace();
 		}

@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ReserveTicketConsumer {
 	private final ObjectMapper objectMapper;
 	private final TicketService ticketService;
-	@KafkaListener(topics = "ticketReserve", groupId = "ticket")
+	@KafkaListener(topics = "ticketReserveUser", groupId = "ticket")
 	public void consume(ConsumerRecord<String, String> record){
 		try{
 			TicketRequestDto ticketRequestDto= objectMapper.readValue(record.value(), TicketRequestDto.class);
