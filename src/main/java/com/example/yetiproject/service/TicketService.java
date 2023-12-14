@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j(topic = "TicketService")
 @RequiredArgsConstructor
-public class TicketServiceImpl {
+public class TicketService {
 	private final TicketRepository ticketRepository;
 	private final TicketInfoRepository ticketInfoRepository;
 

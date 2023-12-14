@@ -27,9 +27,9 @@ import com.example.yetiproject.repository.TicketInfoRepository;
 import com.example.yetiproject.repository.TicketRepository;
 
 @ExtendWith(MockitoExtension.class)
-public class TicketServiceImplTest {
+public class TicketServiceTest {
 	@InjectMocks
-	private TicketServiceImpl ticketServiceImpl;
+	private TicketService ticketService;
 	@Mock
 	private TicketRepository ticketRepository;
 	@Mock
@@ -72,7 +72,7 @@ public class TicketServiceImplTest {
 		Ticket ticket = new Ticket(user, ticketInfo, ticketRequestDto);
 
 		try {
-			TicketResponseDto result = ticketServiceImpl.reserveTicket(user, ticketRequestDto);
+			TicketResponseDto result = ticketService.reserveTicket(user, ticketRequestDto);
 			assertNotNull(result);
 			System.out.println(result.getUserId());
 			System.out.println(result.getTicketInfo().getTicketPrice());
