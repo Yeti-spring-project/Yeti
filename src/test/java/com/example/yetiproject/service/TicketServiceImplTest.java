@@ -1,9 +1,7 @@
 package com.example.yetiproject.service;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.*;
-import static org.mockito.Mockito.*;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -15,11 +13,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.ResponseEntity;
 
 import com.example.yetiproject.dto.ticket.TicketRequestDto;
 import com.example.yetiproject.dto.ticket.TicketResponseDto;
-import com.example.yetiproject.dto.ticketinfo.TicketInfoRequestDto;
 import com.example.yetiproject.entity.Sports;
 import com.example.yetiproject.entity.Stadium;
 import com.example.yetiproject.entity.Ticket;
@@ -31,9 +27,9 @@ import com.example.yetiproject.repository.TicketInfoRepository;
 import com.example.yetiproject.repository.TicketRepository;
 
 @ExtendWith(MockitoExtension.class)
-public class TicketServiceTest {
+public class TicketServiceImplTest {
 	@InjectMocks
-	private TicketService ticketService;
+	private TicketServiceImpl ticketServiceImpl;
 	@Mock
 	private TicketRepository ticketRepository;
 	@Mock
@@ -76,7 +72,7 @@ public class TicketServiceTest {
 		Ticket ticket = new Ticket(user, ticketInfo, ticketRequestDto);
 
 		try {
-			TicketResponseDto result = ticketService.reserveTicket(user, ticketRequestDto);
+			TicketResponseDto result = ticketServiceImpl.reserveTicket(user, ticketRequestDto);
 			assertNotNull(result);
 			System.out.println(result.getUserId());
 			System.out.println(result.getTicketInfo().getTicketPrice());

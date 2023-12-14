@@ -3,7 +3,6 @@ package com.example.yetiproject.service;
 import java.util.List;
 import java.util.Objects;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.example.yetiproject.dto.ticket.TicketRequestDto;
@@ -16,7 +15,6 @@ import com.example.yetiproject.exception.entity.Ticket.TicketNotFoundException;
 import com.example.yetiproject.exception.entity.Ticket.TicketReserveException;
 import com.example.yetiproject.repository.TicketInfoRepository;
 import com.example.yetiproject.repository.TicketRepository;
-import com.example.yetiproject.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j(topic = "TicketService")
 @RequiredArgsConstructor
-public class TicketService {
+public class TicketServiceImpl {
 	private final TicketRepository ticketRepository;
 	private final TicketInfoRepository ticketInfoRepository;
 

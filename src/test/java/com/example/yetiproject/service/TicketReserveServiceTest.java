@@ -19,14 +19,14 @@ import com.example.yetiproject.repository.TicketInfoRepository;
 import com.example.yetiproject.repository.TicketRepository;
 
 @ExtendWith(SpringExtension.class)
-@WebMvcTest(controllers = TicketService.class,
+@WebMvcTest(controllers = TicketServiceImpl.class,
 	excludeFilters = {
 		@ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfig.class)
 	}
 )
 public class TicketReserveServiceTest {
 	@Autowired
-	private TicketService ticketService;
+	private TicketServiceImpl ticketServiceImpl;
 	@Autowired
 	private TicketInfoRepository ticketInfoRepository;
 
@@ -54,7 +54,7 @@ public class TicketReserveServiceTest {
 		TicketRequestDto ticketRequestDto = TicketRequestDto.builder().ticketInfoId(1L).posY(12L).posY(20L).build();
 
 		//when
-		TicketResponseDto ticketResponseDto = ticketService.reserveTicket(user, ticketRequestDto);
+		TicketResponseDto ticketResponseDto = ticketServiceImpl.reserveTicket(user, ticketRequestDto);
 
 		System.out.println(ticketResponseDto.getUserId());
 	}

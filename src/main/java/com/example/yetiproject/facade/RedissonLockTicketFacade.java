@@ -3,7 +3,7 @@ package com.example.yetiproject.facade;
 import com.example.yetiproject.auth.security.UserDetailsImpl;
 import com.example.yetiproject.dto.ticket.TicketRequestDto;
 import com.example.yetiproject.dto.ticket.TicketResponseDto;
-import com.example.yetiproject.service.TicketService;
+import com.example.yetiproject.service.TicketServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 public class RedissonLockTicketFacade {
 
     private final RedissonClient redissonClient;
-    private final TicketService ticketService;
+    private final TicketServiceImpl ticketServiceImpl;
 
     // 예매하기 부분에 Redisson으로 락을 걸어줌
     public TicketResponseDto reserveTicket(UserDetailsImpl userDetails, TicketRequestDto requestDto) {
@@ -35,7 +35,7 @@ public class RedissonLockTicketFacade {
                 log.info("lock 획득 실패");
                 return new TicketResponseDto();
             }
-            responseDto = ticketService.reserveTicket(userDetails.getUser(), requestDto);
+            responseDto = ticketServiceImpl.reserveTicket(userDetails.getUser(), requestDto);
 
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
