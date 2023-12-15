@@ -5,3 +5,5 @@ services:
     ports:
       - "8081:8080"
     container_name: seniors-blue
+    depends_on:
+      - redis
