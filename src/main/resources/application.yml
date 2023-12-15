@@ -9,4 +9,5 @@ spring:
       - common
       - deploy
       - secret
+      - redis
 feUrl: http://localhost:3000
