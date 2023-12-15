@@ -13,7 +13,6 @@ echo "배포 시작 일자 : $(date +%Y)-$(date +%m)-$(date +%d) $(date +%H):$(d
 
 sudo docker stop redis || true
 sudo docker rm redis || true
-sudo docker rmi redis redis || true
 sudo docker-compose -f ./docker-compose.yml up -d
 
 # green이 실행 중이면 blue up
