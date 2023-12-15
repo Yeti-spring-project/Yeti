@@ -6,7 +6,7 @@ build/
 !**/src/test/**/build/
 
 ### application ###
-/src/resources/application-local.yml
+/src/main/resources/application-local.yml
 
 ### STS ###
 .apt_generated
@@ -55,6 +55,7 @@ application-redis.yml
 ### application ###
 application.yml
 /src/main/resources/application.yml
+/src/main/resources/application-local.yml
 /src/main/resources/application-secret.yml
 /src/main/resources/application-deploy.yml
 /src/main/resources/application-common.yml

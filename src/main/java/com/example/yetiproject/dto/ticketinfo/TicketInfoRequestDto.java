@@ -1,6 +1,5 @@
 package com.example.yetiproject.dto.ticketinfo;
 
-import com.example.yetiproject.entity.Stadium;
 import lombok.*;
 
 import java.time.LocalDateTime;

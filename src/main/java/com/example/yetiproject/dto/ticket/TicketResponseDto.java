@@ -1,5 +1,6 @@
 package com.example.yetiproject.dto.ticket;
 
+import com.example.yetiproject.dto.ticketinfo.TicketInfoResponseDto;
 import com.example.yetiproject.entity.Ticket;
 
 import lombok.AllArgsConstructor;
@@ -14,13 +15,13 @@ public class TicketResponseDto {
 	Long posX;
 	Long posY;
 	Long userId;
-	Long ticketInfoId;
+	TicketInfoResponseDto ticketInfo;
 
 	public TicketResponseDto(Ticket ticket) {
 		this.ticketId = ticket.getTicketId();
 		this.posX = ticket.getPosX();
 		this.posY = ticket.getPosY();
 		this.userId = ticket.getUser().getUserId();
-		this.ticketInfoId = ticket.getTicketInfo().getTicketInfoId();
+		this.ticketInfo = new TicketInfoResponseDto(ticket.getTicketInfo());
 	}
 }

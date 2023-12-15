@@ -47,8 +47,7 @@ public class StadiumService {
 
 	// 경기장 찾기
 	private Stadium findStadium(Long id) {
-		Stadium stadium = stadiumRepository.findByStadiumId(id).orElseThrow(
+		return stadiumRepository.findByStadiumId(id).orElseThrow(
 				() -> new StadiumNotFoundException("존재하지 않는 경기장입니다."));
-		return stadium;
 	}
 }

@@ -41,8 +41,7 @@ public class Ticket {
 	@JoinColumn(name = "ticketInfo_id")
 	private TicketInfo ticketInfo;
 
-	public Ticket(Long ticketId, User user, TicketInfo ticketInfo, TicketRequestDto ticketRequestDto) {
-		this.ticketId = ticketId;
+	public Ticket(User user, TicketInfo ticketInfo, TicketRequestDto ticketRequestDto) {
 		this.posX = ticketRequestDto.getPosX();
 		this.posY = ticketRequestDto.getPosY();
 		this.user = user;

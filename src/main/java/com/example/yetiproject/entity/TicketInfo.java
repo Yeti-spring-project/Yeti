@@ -1,17 +1,12 @@
 package com.example.yetiproject.entity;
 
-import java.time.LocalDateTime;
-import java.util.Date;
-
 import com.example.yetiproject.dto.ticketinfo.TicketInfoRequestDto;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.example.yetiproject.exception.entity.TicketInfo.OutOfStockException;
 
-import java.util.Date;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -54,4 +49,11 @@ public class TicketInfo {
         this.openDate = requestDto.getOpenDate();
         this.closeDate = requestDto.getCloseDate();
     }
+
+	public void updateStock(Long amount) {
+        if (this.stock + amount < 0) {
+            throw new OutOfStockException("재고 소진");
+        }
+        this.stock += amount;
+	}
 }

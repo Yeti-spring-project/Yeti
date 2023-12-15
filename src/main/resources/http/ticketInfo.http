@@ -1,0 +1,44 @@
+### 1.로그인후 토큰 받기
+POST http://localhost:8080/api/user/signin
+Content-Type: application/json
+
+{
+  "username":"administrator",
+  "password":"@Qkrwjdals96"
+}
+> {%
+    client.global.set("access_token", response.headers.valueOf("Authorization"));
+    client.log(client.global.get("access_token"));
+%}
+
+### 2. 티켓 생성
+POST http://localhost:8080/api/tickets
+Content-Type: application/json
+Authorization: {{access_token}}
+
+{
+  "sportsId": 1,
+  "ticketPrice": 10000,
+  "stock": 100,
+  "openDate": "2023-12-04T12:34:00",
+  "closeDate": "2023-12-31T12:34:00"
+}
+
+### 2. 티켓 조회
+GET http://localhost:8080/api/tickets/1
+Authorization: {{access_token}}
+
+### 3. 티켓 정보 수정
+PUT http://localhost:8080/api/tickets/1
+Authorization: {{access_token}}
+Content-Type: application/json
+
+{
+  "ticketPrice": 100000,
+  "stock": 10,
+  "openDate": "2023-12-04T12:34:00",
+  "closeDate": "2023-12-31T12:34:00"
+}
+
+### 4. 티켓 정보 삭제
+http://127.0.0.1:8080/api/tickets/1

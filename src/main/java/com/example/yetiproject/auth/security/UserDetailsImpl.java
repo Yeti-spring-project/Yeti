@@ -1,5 +1,6 @@
 package com.example.yetiproject.auth.security;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -33,7 +34,14 @@ public class UserDetailsImpl implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return List.of(new SimpleGrantedAuthority("user"));
+		String authority = "user";
+
+		SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(authority);
+		Collection<GrantedAuthority> authorities = new ArrayList<>();
+		authorities.add(simpleGrantedAuthority);
+
+		return authorities;
+
 	}
 
 	@Override

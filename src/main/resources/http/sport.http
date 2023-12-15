@@ -1,10 +1,10 @@
 ### 1.로그인후 토큰 받기
-POST http://localhost:8080/api/signin
+POST http://localhost:8080/api/user/signin
 Content-Type: application/json
 
 {
-  "email":"admin@test.com",
-  "password":"1234"
+  "username":"administrator",
+  "password":"@Qkrwjdals96"
 }
 > {%
     client.global.set("access_token", response.headers.valueOf("Authorization"));

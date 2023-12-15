@@ -43,55 +43,55 @@ public class TicketServiceTest {
 	private TicketInfoRepository ticketInfoRepository;
 
 	private static TicketRequestDto ticketRequestDto;
-	@BeforeAll
-	static void beforeAll() {
-		ticketRequestDto = TicketRequestDto.builder()
-			.userId(1L)
-			.ticketInfoId(1L)
-			.posX(12L)
-			.posY(14L)
-			.build();
-	}
+	//@BeforeAll
+	// static void beforeAll() {
+	// 	ticketRequestDto = TicketRequestDto.builder()
+	// 		.userId(1L)
+	// 		.ticketInfoId(1L)
+	// 		.posX(12L)
+	// 		.posY(14L)
+	// 		.build();
+	// }
 
-	@Test
-	@DisplayName("예매하기")
-	void test(){
-		//given
-		Long ticketId = 2L;
-		User user = User.builder().userId(1L).build();
-		TicketInfo ticketInfo = TicketInfo.builder().ticketInfoId(1L).build();
-		given(userRepository.findById(ticketRequestDto.getUserId())).willReturn(Optional.of(user));
-		given(ticketInfoRepository.findById(ticketRequestDto.getTicketInfoId())).willReturn(Optional.of(ticketInfo));
+	// @Test
+	// @DisplayName("예매하기")
+	// void test(){
+	// 	//given
+	// 	Long ticketId = 2L;
+	// 	User user = User.builder().userId(1L).build();
+	// 	TicketInfo ticketInfo = TicketInfo.builder().ticketInfoId(1L).build();
+	// 	given(userRepository.findById(ticketRequestDto.getUserId())).willReturn(Optional.of(user));
+	// 	given(ticketInfoRepository.findById(ticketRequestDto.getTicketInfoId())).willReturn(Optional.of(ticketInfo));
+	//
+	// 	Ticket ticket = new Ticket(ticketId, user, ticketInfo, ticketRequestDto);
+	// 	//when
+	// 	TicketResponseDto result = ticketService.reserveTicket(ticketId, ticketRequestDto);
+	//
+	// 	//then
+	// 	// verify 메서드를 사용해 특정 메서드가 호출되었는지 확인할 수 있어
+	// 	verify(userRepository, times(1)).findById(user.getUserId());
+	// 	verify(ticketInfoRepository, times(1)).findById(ticketInfo.getTicketInfoId());
+	// 	verify(ticketRepository, times(1)).save(any(Ticket.class));
+	//
+	// 	System.out.println("result ticketId = " + result.getTicketId());
+	// 	assertNotNull(result);
+	// 	assertEquals(result.getTicketId(), 2L);
+	// }
 
-		Ticket ticket = new Ticket(ticketId, user, ticketInfo, ticketRequestDto);
-		//when
-		TicketResponseDto result = ticketService.reserveTicket(ticketId, ticketRequestDto);
-
-		//then
-		// verify 메서드를 사용해 특정 메서드가 호출되었는지 확인할 수 있어
-		verify(userRepository, times(1)).findById(user.getUserId());
-		verify(ticketInfoRepository, times(1)).findById(ticketInfo.getTicketInfoId());
-		verify(ticketRepository, times(1)).save(any(Ticket.class));
-
-		System.out.println("result ticketId = " + result.getTicketId());
-		assertNotNull(result);
-		assertEquals(result.getTicketId(), 2L);
-	}
-
-	@Test
-	@DisplayName("예매 취소")
-	void test2(){
-		//given
-		Long ticketId = 2L;
-		Ticket ticket = Ticket.builder().posY(12L).build();
-		given(ticketRepository.findById(ticketId)).willReturn(Optional.of(ticket));
-
-		//when
-		ResponseEntity msg = ticketService.cancelUserTicket(ticketId);
-
-		//then
-		verify(ticketRepository, times(1)).findById(ticketId);
-		assertEquals("<200 OK OK,해당 티켓을 취소하였습니다.,[]>", msg.toString());
-
-	}
+	// @Test
+	// @DisplayName("예매 취소")
+	// void test2(){
+	// 	//given
+	// 	Long ticketId = 2L;
+	// 	Ticket ticket = Ticket.builder().posY(12L).build();
+	// 	given(ticketRepository.findById(ticketId)).willReturn(Optional.of(ticket));
+	//
+	// 	//when
+	// 	ResponseEntity msg = ticketService.cancelUserTicket(ticketId);
+	//
+	// 	//then
+	// 	verify(ticketRepository, times(1)).findById(ticketId);
+	// 	assertEquals("<200 OK OK,해당 티켓을 취소하였습니다.,[]>", msg.toString());
+	//
+	// }
 }

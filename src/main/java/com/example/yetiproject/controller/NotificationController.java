@@ -1,5 +1,6 @@
 package com.example.yetiproject.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -12,6 +13,7 @@ import com.example.yetiproject.service.NotificationService;
 
 import lombok.RequiredArgsConstructor;
 
+@Slf4j(topic = "NotificationController")
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/sports")
@@ -23,6 +25,12 @@ public class NotificationController {
 	@GetMapping(value = "/subscribe", produces = "text/event-stream")
 	public SseEmitter subscribe(@AuthenticationPrincipal UserDetailsImpl userDetails,
 		@RequestHeader(value = "Last-Event-ID", required = false, defaultValue = "") String lastEventId) {
+		log.info("subscribe 실행");
 		return notificationService.subscribe(userDetails.getUser().getUserId(), lastEventId);
+	}
+
+	@GetMapping("/")
+	public void abc(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+		notificationService.send("sf", userDetails.getUser());
 	}
 }

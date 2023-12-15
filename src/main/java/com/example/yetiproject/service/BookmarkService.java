@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+import com.example.yetiproject.exception.entity.TicketInfo.TicketInfoNotFoundException;
+import com.example.yetiproject.exception.entity.user.UserNotFoundException;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,10 +34,10 @@ public class BookmarkService {
 
 	public String bookmark(Long ticketInfoId, Long userId) {
 		TicketInfo ticketInfo = ticketInfoRepository.findById(ticketInfoId).orElseThrow(
-			() -> new EntityNotFoundException("티켓 정보가 없습니다."));
+			() -> new TicketInfoNotFoundException("티켓 정보가 없습니다."));
 
 		User user = userRepository.findById(userId).orElseThrow(
-			() -> new EntityNotFoundException("유저 정보가 없습니다."));
+			() -> new UserNotFoundException("유저 정보가 없습니다."));
 
 		// 북마크 검색
 		Bookmark bookmark = bookmarkRepository.findByTicketInfoIdAndUserIdJpql(ticketInfoId, userId).orElse(null);
@@ -67,7 +69,7 @@ public class BookmarkService {
 			() -> new EntityNotFoundException("찜 내역이 없습니다."));
 
 		User user = userRepository.findById(userId).orElseThrow(
-			() -> new EntityNotFoundException("회원정보가 없습니다."));
+			() -> new UserNotFoundException("회원정보가 없습니다."));
 
 		String sportName = bookmark.getTicketInfo().getSports().getSportName();
 		String gameDate = bookmark.getTicketInfo().getSports().getMatchDate();
