@@ -7,6 +7,6 @@ spring:
       deploy:
     include:
       - common
-      #- deploy
+      - deploy
       - secret
 feUrl: http://localhost:3000
