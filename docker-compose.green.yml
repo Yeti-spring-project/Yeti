@@ -5,6 +5,8 @@ services:
     ports:
       - "8082:8080"
     container_name: seniors-green
+    depends_on:
+      - redis
   redis:
     image: redis
     container_name: redis
