@@ -8,11 +8,6 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
-  data:
-    redis:
-      host: 13.209.247.218
-      port: 6379
-      timeout: 3000
 jwt:
   secret:
     key:
