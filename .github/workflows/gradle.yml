@@ -81,7 +81,7 @@ jobs:
             --s3-location bucket=yeti-github-actions-s3-bucket,bundleType=zip,key=seniors-build.zip
 
       # 배포 결과 Slack 알람 전송
-      - name: Slack 알람 발송 test
+      - name: Slack 알람 발송 test2
         uses: rtCamp/action-slack-notify@v2
         with:
           status: ${{ job.status }}
