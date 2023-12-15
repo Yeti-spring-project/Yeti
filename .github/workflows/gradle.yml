@@ -72,7 +72,7 @@ jobs:
             --region ap-northeast-2 \
             ./seniors-build.zip s3://yeti-github-actions-s3-bucket
 
-      # CodeDeploy에 배포 요청
+      # CodeDeploy에 배포
       - name: Code Deploy Deployment Request
         run: |
           aws deploy create-deployment --application-name yeti-codedeploy-app \
