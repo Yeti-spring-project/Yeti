@@ -61,6 +61,7 @@ jobs:
           cp ./Dockerfile ./deploy/
           cp ./docker-compose.blue.yml ./deploy/
           cp ./docker-compose.green.yml ./deploy/
+          cp ./redis-compose.yml ./deploy/
           cp ./deploy.sh ./deploy/
           cp ./build/libs/*.jar ./deploy/
           zip -r -qq -j ./seniors-build.zip ./deploy
