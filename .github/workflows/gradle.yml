@@ -63,7 +63,6 @@ jobs:
           cp ./docker-compose.green.yml ./deploy/
           cp ./deploy.sh ./deploy/
           cp ./build/libs/*.jar ./deploy/
-          cp ./docker-compose.yml ./deploy/
           zip -r -qq -j ./seniors-build.zip ./deploy
 
       # S3에 zip 파일 업로드
