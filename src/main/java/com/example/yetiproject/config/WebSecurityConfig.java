@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -18,9 +20,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.example.yetiproject.auth.LogoutSuccessHandlerImpl;
+import com.example.yetiproject.auth.jwt.JwtAuthenticationFilter;
+import com.example.yetiproject.auth.jwt.JwtAuthorizationFilter;
+import com.example.yetiproject.auth.jwt.JwtUtil;
+import com.example.yetiproject.auth.security.UserDetailsServiceImpl;
+
 @Configuration
-@EnableWebSecurity // Spring Security 지원을 가능하게 함
-@RequiredArgsConstructor
+@EnableWebSecurity
+@RequiredArgsConstructor// Spring Security 지원을 가능하게 함
 public class WebSecurityConfig {
 
 	private final JwtUtil jwtUtil;
@@ -60,20 +68,23 @@ public class WebSecurityConfig {
 		);
 
 		http.authorizeHttpRequests((authorizeHttpRequests) ->
-				authorizeHttpRequests
-						.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resources 접근 허용 설정
-						.requestMatchers("/").permitAll() // 메인 페이지 요청 허가
-						.requestMatchers("/api/user/**").permitAll() // '/api/user/'로 시작하는 요청 모두 접근 허가
+			authorizeHttpRequests
+				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll() // resources 접근 허용 설정
+				.requestMatchers("/").permitAll() // 메인 페이지 요청 허가
+				.requestMatchers(HttpMethod.GET, "/api/tickets/**").permitAll()
+				.requestMatchers("/api/user/**").permitAll() // '/api/user/'로 시작하는 요청 모두 접근 허가
 
-						.anyRequest().authenticated() // 그 외 모든 요청 인증처리
+				.anyRequest().authenticated() // 그 외 모든 요청 인증처리
 		);
 
 		// 로그인 사용
 		http.formLogin((formLogin) ->
-				formLogin
-						//.loginPage("/login-page")
-						.loginProcessingUrl("/api/user/signin").permitAll()
+			formLogin
+				//.loginPage("/login-page")
+				.loginProcessingUrl("/signin")
+				.permitAll()
 		);
+
 
 		// 필터 관리
 		http.addFilterBefore(jwtAuthorizationFilter(), JwtAuthenticationFilter.class);

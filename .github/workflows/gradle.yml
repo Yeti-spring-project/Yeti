@@ -61,6 +61,7 @@ jobs:
           cp ./Dockerfile ./deploy/
           cp ./docker-compose.blue.yml ./deploy/
           cp ./docker-compose.green.yml ./deploy/
+          cp ./redis-compose.yml ./deploy/
           cp ./deploy.sh ./deploy/
           cp ./build/libs/*.jar ./deploy/
           zip -r -qq -j ./seniors-build.zip ./deploy
@@ -72,7 +73,7 @@ jobs:
             --region ap-northeast-2 \
             ./seniors-build.zip s3://yeti-github-actions-s3-bucket
 
-      # CodeDeploy에 배포 요청
+      # CodeDeploy에 배포
       - name: Code Deploy Deployment Request
         run: |
           aws deploy create-deployment --application-name yeti-codedeploy-app \
@@ -81,7 +82,7 @@ jobs:
             --s3-location bucket=yeti-github-actions-s3-bucket,bundleType=zip,key=seniors-build.zip
 
       # 배포 결과 Slack 알람 전송
-      - name: Slack 알람 발송 test
+      - name: Slack 알람 발송 test2
         uses: rtCamp/action-slack-notify@v2
         with:
           status: ${{ job.status }}

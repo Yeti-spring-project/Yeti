@@ -1,7 +1,9 @@
 package com.example.yetiproject.controller;
 
+import com.example.yetiproject.auth.security.UserDetailsImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +23,8 @@ public class BookmarkController {
 	private final BookmarkService bookmarkService;
 
 	@PostMapping("/bookmarks")
-	public ResponseEntity<String> bookmark(@RequestParam("ticketInfoId") Long ticketInfoId, @RequestParam("userId") Long userId) {
-		return ResponseEntity.status(HttpStatus.CREATED).body(bookmarkService.bookmark(ticketInfoId, userId));
+	public ResponseEntity<String> bookmark(@RequestParam("ticketinfoid") Long ticketInfoId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(bookmarkService.bookmark(ticketInfoId, userDetails.getUser().getUserId()));
 	}
 
 	// @GetMapping("/alert")

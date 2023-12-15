@@ -1,5 +1,6 @@
 package com.example.yetiproject.service;
 
+import com.example.yetiproject.dto.sports.SportsResponseDto;
 import com.example.yetiproject.dto.ticketinfo.TicketInfoRequestDto;
 import com.example.yetiproject.dto.ticketinfo.TicketInfoResponseDto;
 import com.example.yetiproject.entity.Sports;
@@ -11,6 +12,9 @@ import com.example.yetiproject.repository.TicketInfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +37,12 @@ public class TicketInfoService {
         return new TicketInfoResponseDto(ticketInfo);
     }
 
-    // 티켓 정보 조회
+    // 티켓 정보 리스트 조회
+    public List<TicketInfoResponseDto> getTicketInfoList() {
+        return ticketInfoRepository.findAll().stream().map(TicketInfoResponseDto::new).collect(Collectors.toList());
+    }
+
+    // 티켓 정보 상세 조회
     public TicketInfoResponseDto getTicketInfo(Long id) {
         TicketInfo ticketInfo = findTicketInfo(id);
         return new TicketInfoResponseDto(ticketInfo);

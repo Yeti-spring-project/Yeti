@@ -62,7 +62,7 @@ public class TicketService {
 			ticketInfo.updateStock(1L);
 			ticketRepository.delete(ticket);
 		}catch (Exception e){
-			new TicketCancelException("예매를 취소 할 수 없습니다.");
+			throw new TicketCancelException("예매를 취소 할 수 없습니다.");
 		}
 		return ResponseEntity.ok().body("해당 티켓을 취소하였습니다.");
 	}
