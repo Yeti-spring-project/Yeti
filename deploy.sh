@@ -14,7 +14,7 @@ echo "배포 시작 일자 : $(date +%Y)-$(date +%m)-$(date +%d) $(date +%H):$(d
 # Redis Compose 실행
 sudo docker-compose -p redis -f redis-compose.yml up -d
 
-# redis의 실행 시간을 위해서 대기
+# redis의 실행 시간을 위해서 대기.
 sleep 5
 
 # green이 실행 중이면 blue up
