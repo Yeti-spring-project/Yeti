@@ -54,6 +54,7 @@ public class TicketService {
 		TicketInfo ticketInfo = ticket.getTicketInfo();
 
 		// 티켓을 산 유저와 접근한 유저가 같은지 확인
+		//
 		if (!Objects.equals(user.getUserId(), ticket.getUser().getUserId())) {
 			throw new RuntimeException("회원님이 구매하신 티켓이 아닙니다.");
 		}
