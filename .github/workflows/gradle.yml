@@ -66,7 +66,7 @@ jobs:
           zip -r -qq -j ./seniors-build.zip ./deploy
 
       # S3에 zip 파일 업로드
-      - name: Upload to S3
+      - name: Upload to S32
         run: |
           aws s3 cp \
             --region ap-northeast-2 \
