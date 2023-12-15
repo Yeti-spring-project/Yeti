@@ -12,7 +12,7 @@ EXIST_BLUE=$(sudo docker-compose -p ${DOCKER_APP_NAME}-blue -f docker-compose.bl
 echo "배포 시작 일자 : $(date +%Y)-$(date +%m)-$(date +%d) $(date +%H):$(date +%M):$(date +%S)" >> /home/ubuntu/deploy.log
 
 # Redis Compose 실행
-sudo docker-compose -p ${DOCKER_APP_NAME}-redis -f redis-compose.yml up -d
+sudo docker-compose -p redis -f redis-compose.yml up -d
 
 # green이 실행 중이면 blue up
 # EXIST_BLUE 변수가 비어있는지 확인
