@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j(topic = "북마크 서비스")
+@Slf4j(topic = "북마크 서비스 ")
 public class BookmarkService {
 
 	private final NotificationService notificationService;
