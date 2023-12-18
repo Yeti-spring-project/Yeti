@@ -18,7 +18,10 @@ import com.example.yetiproject.auth.security.UserDetailsImpl;
 import com.example.yetiproject.dto.ApiResponse;
 import com.example.yetiproject.dto.ticket.TicketRequestDto;
 import com.example.yetiproject.dto.ticket.TicketResponseDto;
+import com.example.yetiproject.facade.scheduler.ReserveScheduler;
+import com.example.yetiproject.facade.service.WaitingQueueService;
 import com.example.yetiproject.service.TicketService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,6 +32,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/mytickets")
 public class TicketController {
 	private final TicketService ticketService;
+	private final WaitingQueueService waitingQueueService;
 	private final RedissonLockTicketFacade redissonLockTicketFacade;
 
 	// 예매한 티켓 목록 조회
@@ -47,9 +51,11 @@ public class TicketController {
 
 	// 예매 하기
 	@PostMapping("/reserve")
-	public ApiResponse reserveTicket(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody TicketRequestDto ticketRequestDto) {
+	public ApiResponse reserveTicket(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody TicketRequestDto ticketRequestDto) throws
+		JsonProcessingException {
 		log.info("TicketController reserveTicket");
-		return ApiResponse.success("예매가 완료되었습니다.", redissonLockTicketFacade.reserveTicket(userDetails, ticketRequestDto));
+		return ApiResponse.success("예매 완료" , waitingQueueService.registerQueue(userDetails.getUser().getUserId(), ticketRequestDto));
+		//return ApiResponse.success("예매가 완료되었습니다.", redissonLockTicketFacade.reserveTicket(userDetails, ticketRequestDto));
 	}
 
 	// 예매 취소
