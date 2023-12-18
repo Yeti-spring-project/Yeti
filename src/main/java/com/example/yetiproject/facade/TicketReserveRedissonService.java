@@ -8,6 +8,7 @@ import org.springframework.security.authentication.LockedException;
 import org.springframework.stereotype.Service;
 
 import com.example.yetiproject.dto.ticket.TicketRequestDto;
+import com.example.yetiproject.entity.Seat;
 import com.example.yetiproject.entity.User;
 import com.example.yetiproject.service.TicketService;
 
@@ -22,7 +23,8 @@ public class TicketReserveRedissonService {
 	private final TicketService ticketService;
 
 	public void reserveTicket(User user, TicketRequestDto ticketRequestDto){
-		RLock lock = redissonClient.getLock("ticket- " + ticketRequestDto.getUserId());
+		Seat seat = new Seat(ticketRequestDto.getPosX(), ticketRequestDto.getPosY());
+		RLock lock = redissonClient.getLock("ticket seat- " + seat);
 		try{
 			boolean isLocked = lock.tryLock(3, 3, TimeUnit.SECONDS);
 			if(!isLocked){
