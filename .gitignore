@@ -54,6 +54,7 @@ application-redis.yml
 
 ### application ###
 application.yml
+application-common.yml
 /src/main/resources/application.yml
 /src/main/resources/application-local.yml
 /src/main/resources/application-secret.yml
