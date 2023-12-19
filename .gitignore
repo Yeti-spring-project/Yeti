@@ -61,4 +61,5 @@ application-common.yml
 /src/main/resources/application-deploy.yml
 /src/main/resources/application-common.yml
 /src/main/resources/application-system.yml
+/src/main/resources/application-kafka.yml
 
