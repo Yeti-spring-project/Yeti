@@ -3,6 +3,7 @@ package com.example.yetiproject.controller;
 import java.util.List;
 
 import com.example.yetiproject.facade.RedissonLockTicketFacade;
+import com.example.yetiproject.facade.WaitingQueueListService;
 import com.example.yetiproject.facade.WaitingQueueService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,7 @@ public class TicketController {
 	private final TicketKafkaService ticketKafkaService;
 	private final RedissonLockTicketFacade redissonLockTicketFacade;
 	private final WaitingQueueService waitingQueueService;
+	private final WaitingQueueListService waitingQueueListService;
 
 	// 예매한 티켓 목록 조회
 	@GetMapping("")
@@ -50,7 +52,7 @@ public class TicketController {
 		return ApiResponse.success("티켓 상세 조회에 성공했습니다", ticketService.showDetailTicket(userDetails.getUser().getUserId(), ticketId));
 	}
 
-	// 예매 - redission
+	// 예매 - redisson
 	@PostMapping("/reserve")
 	public ApiResponse reserveTicket(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody TicketRequestDto ticketRequestDto) {
 		return ApiResponse.success("예매가 완료되었습니다.", redissonLockTicketFacade.reserveTicket(userDetails, ticketRequestDto));
@@ -66,7 +68,15 @@ public class TicketController {
 	// 예매 - redis queue
 	@PostMapping("/reserve/queue")
 	public ApiResponse reserveTicketQueue(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody TicketRequestDto ticketRequestDto) throws JsonProcessingException {
+		log.info("queue start : {}", System.currentTimeMillis());
 		waitingQueueService.addQueue(userDetails, ticketRequestDto);
+		return ApiResponse.successWithNoContent("예매가 완료되었습니다.");
+	}
+
+	@PostMapping("/reserve/queueList")
+	public ApiResponse reserveTicketQueueList(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody TicketRequestDto ticketRequestDto) throws JsonProcessingException {
+		log.info("queue start : {}", System.currentTimeMillis());
+		waitingQueueListService.addQueue(userDetails, ticketRequestDto);
 		return ApiResponse.successWithNoContent("예매가 완료되었습니다.");
 	}
 

@@ -1,6 +1,7 @@
 package com.example.yetiproject.exception;
 
 import com.example.yetiproject.exception.entity.Ticket.TicketCancelException;
+import com.example.yetiproject.exception.entity.Ticket.TicketDuplicateSeatException;
 import com.example.yetiproject.exception.entity.Ticket.TicketNotFoundException;
 import com.example.yetiproject.exception.entity.Ticket.TicketReserveException;
 import com.example.yetiproject.exception.entity.TicketInfo.TicketInfoNotFoundException;
@@ -14,9 +15,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @ControllerAdvice
 public class CustomExceptionHandler {
+
+    @ExceptionHandler(TicketDuplicateSeatException.class)
+    @ResponseStatus(HttpStatus.CONFLICT) // 409
+    public ResponseEntity<?> ticketDuplicateSeatException(TicketDuplicateSeatException ex) {
+        ErrorMessage errorMessage = new ErrorMessage(ex.getMessage(), HttpStatus.CONFLICT, HttpStatus.CONFLICT.value());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorMessage);
+    }
 
     @ExceptionHandler(UserDuplicatedException.class)
     @ResponseStatus(HttpStatus.CONFLICT) // 409

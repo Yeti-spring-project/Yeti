@@ -62,4 +62,5 @@ application.yml
 /src/main/resources/application-system.yml
 /src/main/resources/application-kafka.yml
 /src/main/resources/application-redis.yml
+/src/main/resources/application-test.yml
 

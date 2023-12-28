@@ -16,4 +16,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
 	@Query(value="select * from tickets where user_id = ? and ticket_id = ? ", nativeQuery = true)
 	Optional<Ticket> findUserTicket(Long userId, Long ticketId);
+
+	@Query(value="select * from tickets where ticket_info_id = ? and posx = ? and posy = ?", nativeQuery = true)
+	Optional<Ticket> findByTicketPosition(Long ticketInfoId,Long posX, Long posY);
 }
