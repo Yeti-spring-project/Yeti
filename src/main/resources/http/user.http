@@ -1,12 +1,12 @@
 ### 0.회원가입 - ADMIN
-POST http://localhost:8080/api/user/signup
+POST http://13.209.247.218//api/user/signup
 Content-Type: application/json
 
 {
-  "email":"admin@test.com",
+  "email":"jungmin@test.com",
   "password":"@Qkrwjdals96",
   "password2": "@Qkrwjdals96",
-  "username": "administrator",
+  "username": "jungmin",
   "address" : "111-400",
   "phoneNumber": "010-1111-1111"
 }
@@ -17,5 +17,14 @@ Content-Type: application/json
 
 {
   "username":"administrator",
+  "password":"@Qkrwjdals96"
+}
+
+### 1.로그인후 토큰 받기 - EC2
+POST http://13.209.247.218/api/user/signin
+Content-Type: application/json
+
+{
+  "username":"jungmin",
   "password":"@Qkrwjdals96"
 }

@@ -5,6 +5,9 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### application ###
+/src/main/resources/application-local.yml
+
 ### STS ###
 .apt_generated
 .classpath
@@ -57,4 +60,6 @@ application.yml
 /src/main/resources/application-deploy.yml
 /src/main/resources/application-common.yml
 /src/main/resources/application-system.yml
+/src/main/resources/application-kafka.yml
+/src/main/resources/application-redis.yml
 

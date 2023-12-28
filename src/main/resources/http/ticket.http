@@ -31,6 +31,17 @@ Authorization: {{access_token}}
   "posY" : 18
 }
 
+### 3-1. 티켓 예매하기-Ec2
+POST http://13.209.247.218/api/mytickets/reserve
+Content-Type: application/json
+Authorization: {{access_token}}
+
+{
+  "ticketInfoId" : 1,
+  "posX" : 12,
+  "posY" : 20
+}
+
 ### 4. 예매한 티켓 취소하기
 DELETE http://localhost:8080/api/mytickets/2
 Authorization: {{access_token}}

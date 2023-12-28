@@ -3,6 +3,8 @@ package com.example.yetiproject.service;
 import java.util.List;
 import java.util.Objects;
 
+import jakarta.persistence.EntityManager;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.example.yetiproject.dto.ticket.TicketRequestDto;
@@ -19,33 +21,46 @@ import com.example.yetiproject.repository.UserRepository;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TicketService {
 	private final TicketRepository ticketRepository;
 	private final TicketInfoRepository ticketInfoRepository;
+	private final EntityManager entityManager;
 	public List<TicketResponseDto> getUserTicketList(User user) {
 		return ticketRepository.findUserTicketList(user.getUserId()).stream().map(TicketResponseDto::new).toList();
 	}
 	public TicketResponseDto showDetailTicket(Long userId, Long ticketId) {
 		return new TicketResponseDto(ticketRepository.findUserTicket(userId, ticketId).
 				orElseThrow(() -> new TicketNotFoundException("잘못된 티켓 조회입니다.")));
-		//return new TicketResponseDto(ticketRepository.findUserShowDetailTicket(userId, ticketId));
 	}
 
 	@Transactional
 	public TicketResponseDto reserveTicket(User user, TicketRequestDto ticketRequestDto) {
 		TicketInfo ticketInfo = ticketInfoRepository.findById(ticketRequestDto.getTicketInfoId()).get();
+		log.info("UserId : " + user.getUserId());
+		log.info("TicketRequestDto Y: " + ticketRequestDto.getPosY());
 		Ticket ticket = new Ticket(user, ticketInfo, ticketRequestDto);
-		try {
-			ticketInfo.updateStock(-1L); // 티켓 총 개수 차감
-			ticketRepository.save(ticket);
-		}catch (Exception e){
-			throw new TicketReserveException("예약을 할 수 없습니다.");
-		}
+		ticketRepository.save(ticket);
+
+		ticketInfoRepository.findById(ticketRequestDto.getTicketInfoId());
+		ticketInfo.updateStock(-1L);
 		return new TicketResponseDto(ticket);
 	}
+
+	public TicketResponseDto reserveTicketQueue(User user, TicketRequestDto ticketRequestDto) {
+		TicketInfo ticketInfo = ticketInfoRepository.findById(ticketRequestDto.getTicketInfoId()).get();
+		Ticket ticket = new Ticket(user, ticketInfo, ticketRequestDto);
+
+		log.info("Ticket state: " + entityManager.contains(ticket)); //Ticket state: false
+		ticketRepository.save(ticket);
+		log.info("Ticket state after save: " + entityManager.contains(ticket)); // Ticket state : true
+		return new TicketResponseDto(ticket);
+	}
+
 
 	@Transactional
 	public ResponseEntity cancelUserTicket(User user, Long ticketId) {

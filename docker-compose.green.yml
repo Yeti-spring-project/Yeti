@@ -4,3 +4,9 @@ services:
     build: .
     ports:
       - "8082:8080"
+    container_name: seniors-green
+    environment:
+      - REDIS_HOST = 13.209.247.218
+      - REDIS_PORT = 6379
+volumes:
+  redis_data:
