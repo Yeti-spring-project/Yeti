@@ -13,6 +13,7 @@ import com.example.yetiproject.repository.EmitterRepository;
 import com.example.yetiproject.repository.EmitterRepositoryImpl;
 import com.example.yetiproject.repository.NotificationRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,6 +26,7 @@ public class NotificationService {
 	private final NotificationRepository notificationRepository;
 	private static final Long DEFAULT_TIMEOUT = 60L * 1000 * 60;
 
+	@Transactional
 	public SseEmitter subscribe(Long userId, String lastEventId) {
 
 		// emitter와 event의 순서를 구별하기 위해 userId에 시간 추가
@@ -38,17 +40,23 @@ public class NotificationService {
 		sendNotification(emitter, eventId, emitterId, "EventStream Created. [userId=" + userId + "]");
 
 		// 클라이언트가 수신하지 못한 이벤트가 존재하는 경우 전송
-		if (!lastEventId.isEmpty()) {
-			Map<String, Object> eventCaches = emitterRepository.findAllEventCacheStartWithByUserId(String.valueOf(userId));
-			eventCaches.entrySet().stream()
-				.filter(entry -> lastEventId.compareTo(entry.getKey()) < 0)
-				.forEach(entry -> sendNotification(emitter, entry.getKey(), emitterId, entry.getValue()));
-		}
+		// if (!lastEventId.isEmpty()) {
+		// 	Map<String, Object> eventCaches = emitterRepository.findAllEventCacheStartWithByUserId(String.valueOf(userId));
+		// 	eventCaches.entrySet().stream()
+		// 		.filter(entry -> lastEventId.compareTo(entry.getKey()) < 0)
+		// 		.forEach(entry -> sendNotification(emitter, entry.getKey(), emitterId, entry.getValue()));
+		// }
 
 		return emitter;
 	}
 
 	public void send(String content, User receiver) {
+
+		// Test용 예외처리
+		if (receiver == null) {
+			return ;
+		}
+
 		Notification notification = notificationRepository.save(new Notification(content, receiver));
 
 		String receiverId = String.valueOf(receiver.getUserId());
@@ -60,6 +68,27 @@ public class NotificationService {
 				sendNotification(emitter, eventId, key, new NotificationResponseDto(notification));
 			}
 		);
+	}
+
+	public void complete(User receiver) {
+
+		// Test용 예외처리
+		if (receiver == null) {
+			return ;
+		}
+
+		String receiverId = String.valueOf(receiver.getUserId());
+
+		Map<String, SseEmitter> emitters = emitterRepository.findAllEmitterStartWithByUserId(receiverId);
+		emitters.forEach(
+			(key, emitter) -> {
+				emitter.complete();
+			}
+		);
+	}
+
+	public Map<String, SseEmitter> getEmitterList() {
+		return emitterRepository.findAll();
 	}
 
 	private void sendNotification(SseEmitter emitter, String eventId, String emitterId, Object data) {

@@ -5,12 +5,18 @@ import com.example.yetiproject.dto.ApiResponse;
 import com.example.yetiproject.dto.ticket.TicketRequestDto;
 import com.example.yetiproject.dto.ticket.TicketResponseDto;
 import com.example.yetiproject.facade.*;
+import com.example.yetiproject.facade.RedissonLockTicketFacade;
+import com.example.yetiproject.facade.WaitingQueueListService;
+import com.example.yetiproject.facade.WaitingQueueService;
+import com.example.yetiproject.facade.WaitingQueueSortedSetService;
+import com.example.yetiproject.service.NotificationService;
 import com.example.yetiproject.service.TicketService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import java.util.List;
 
@@ -26,6 +32,9 @@ public class TicketController {
 	private final WaitingQueueListService waitingQueueListService;
 	private final WaitingQueueListBulkService waitingQueueListBulkService;
 	private final WaitingQueueSortedSetService waitingQueueSortedSetService;
+
+	// SSE
+	private final NotificationService notificationService;
 
 	// 예매한 티켓 목록 조회
 	@GetMapping("")

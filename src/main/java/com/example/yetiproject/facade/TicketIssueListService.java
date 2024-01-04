@@ -1,6 +1,7 @@
 package com.example.yetiproject.facade;
 
 import com.example.yetiproject.dto.ticket.TicketRequestDto;
+import com.example.yetiproject.facade.aspect.RankQueueSse;
 import com.example.yetiproject.facade.repository.RedisRepository;
 import com.example.yetiproject.repository.TicketInfoRepository;
 import com.example.yetiproject.service.TicketService;
@@ -23,8 +24,12 @@ public class TicketIssueListService {
 	private final TicketService ticketService;
 	private final ObjectMapper objectMapper;
 	private final TicketInfoRepository ticketInfoRepository;
+
+	// sse
+	private final RankQueueSse rankQueueSse;
+
 	private static final long FIRST_ELEMENT = 0;
-	private static final long PUBLISH_SIZE = 100;
+	private static final long PUBLISH_SIZE = 10;
 	private static final long LAST_INDEX = 1;
 
 
@@ -39,6 +44,10 @@ public class TicketIssueListService {
 		for (String ticketRequest : queue) {
 			TicketRequestDto ticketRequestDto = objectMapper.readValue(ticketRequest, TicketRequestDto.class);
 			ticketRequests.add(ticketRequestDto);
+
+			// sse
+			rankQueueSse.printEmitterList();
+			rankQueueSse.completeSse(ticketRequestDto.getUserId());
 		}
 
 		// 티켓 일괄 발급

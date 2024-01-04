@@ -27,6 +27,11 @@ public class EmitterRepositoryImpl implements EmitterRepository{
 		eventCache.put(eventCacheId, event);
 	}
 
+	public Map<String, SseEmitter> findAll() {
+		return emitters.entrySet().stream()
+			.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+	}
+
 	@Override
 	public Map<String, SseEmitter> findAllEmitterStartWithByUserId(String userId) {
 		return emitters.entrySet().stream()

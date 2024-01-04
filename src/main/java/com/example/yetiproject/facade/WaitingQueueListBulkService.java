@@ -2,6 +2,7 @@ package com.example.yetiproject.facade;
 
 import com.example.yetiproject.dto.ticket.TicketRequestDto;
 import com.example.yetiproject.entity.TicketInfo;
+import com.example.yetiproject.facade.aspect.RankQueueSse;
 import com.example.yetiproject.facade.repository.RedisRepository;
 import com.example.yetiproject.repository.TicketInfoRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -24,10 +25,14 @@ public class WaitingQueueListBulkService {
 	private final TicketInfoRepository ticketInfoRepository;
 	private final TicketIssueListService ticketIssueListService;
 	private final ObjectMapper objectMapper;
+
+	// sse
+	private final RankQueueSse rankQueueSse;
+
 	private static final long FIRST_ELEMENT = 0;
 	private static final long LAST_ELEMENT = -1;
 
-	@Scheduled(fixedDelay = 1000)
+	@Scheduled(fixedDelay = 3000)
 	private void ticketReserveScheduler() throws JsonProcessingException {
 		//log.info("======== 예매가 시작됩니다.==========");
 		ticketIssueListService.publish();
@@ -61,6 +66,10 @@ public class WaitingQueueListBulkService {
 		for ( String ticketRequest : queue) {
 			Long rank = redisRepository.indexOfRank("ticket", ticketRequest);
 //			log.info("'{}'님의 현재 대기열은 {}명 남았습니다.", ticketRequest, rank);
+
+			// sse
+			Long userId = objectMapper.readValue(ticketRequest, TicketRequestDto.class).getUserId();
+			rankQueueSse.sendMessage(userId, rank);
 		}
 	}
 
