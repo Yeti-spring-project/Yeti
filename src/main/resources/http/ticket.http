@@ -17,7 +17,7 @@ Content-Type: application/json
 Authorization: {{access_token}}
 
 ### 2. 예매한 티켓 상세 조회
-GET http://localhost:8080/api/mytickets/ticketId/4
+GET http://localhost:8080/api/mytickets/ticketId/1
 Authorization: {{access_token}}
 
 ### 3. local - 티켓 예매하기
@@ -28,7 +28,7 @@ Authorization: {{access_token}}
 {
   "ticketInfoId" : 1,
   "posX" : 12,
-  "posY" : 18
+  "posY" : 19
 }
 
 ### 3-1. local - 티켓 예매하기(sortedset - 좌석, 날짜 체크 안함)

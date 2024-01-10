@@ -2,6 +2,7 @@ package com.example.yetiproject.controller;
 
 import com.example.yetiproject.auth.security.UserDetailsImpl;
 import com.example.yetiproject.dto.ApiResponse;
+import com.example.yetiproject.dto.ticket.TicketInterface;
 import com.example.yetiproject.dto.ticket.TicketRequestDto;
 import com.example.yetiproject.dto.ticket.TicketResponseDto;
 import com.example.yetiproject.dto.user.RegisterUserResponse;
@@ -12,6 +13,8 @@ import com.example.yetiproject.service.TicketService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.hibernate.type.descriptor.jdbc.OracleJsonBlobJdbcType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,14 +34,13 @@ public class TicketController {
 
 	// 예매한 티켓 목록 조회
 	@GetMapping("")
-	public ApiResponse<List<TicketResponseDto>> viewListOfReservedTickets(@AuthenticationPrincipal UserDetailsImpl userDetails){
+	public ApiResponse<List<Object>> viewListOfReservedTickets(@AuthenticationPrincipal UserDetailsImpl userDetails){
 		return ApiResponse.success("예매한 티켓 목록 조회에 성공했습니다.", ticketService.getUserTicketList(userDetails.getUser()));
 	}
 
 	// 예매한 티켓 상세 조회
 	@GetMapping("/ticketId/{ticketId}")
-	public ApiResponse<TicketResponseDto> detailViewReservedTicket(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable(name = "ticketId") Long ticketId){
-		log.info("[Controller : detailViewReservedTicket userId = ] " + userDetails.getUser().getUserId());
+	public ApiResponse<Object> detailViewReservedTicket(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable(name = "ticketId") Long ticketId){
 		return ApiResponse.success("티켓 상세 조회에 성공했습니다", ticketService.showDetailTicket(userDetails.getUser().getUserId(), ticketId));
 	}
 

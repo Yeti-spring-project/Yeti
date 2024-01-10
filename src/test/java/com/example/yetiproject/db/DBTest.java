@@ -93,7 +93,7 @@ public class DBTest {
 	}
 
 	@Test
-	@DisplayName("Ticket User의 연관관계뒤 속도차이를 비교해본다.")
+	@DisplayName("Ticket 연관관계를 끊고 속도차이를 비교해본다.")
 	void test5(){
 		long startTime = System.currentTimeMillis();
 		Long userId = 1L;
