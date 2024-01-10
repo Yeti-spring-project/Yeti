@@ -26,18 +26,32 @@ public class Ticket {
 	@Column(name="posY")
 	Long posY;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private User user;
+	// @ManyToOne(fetch = FetchType.LAZY)
+	// @JoinColumn(name = "user_id")
+	// private User user;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ticketInfo_id")
-	private TicketInfo ticketInfo;
+	@Column(name = "user_id")
+	Long userId;
 
-	public Ticket(User user, TicketInfo ticketInfo, TicketRequestDto ticketRequestDto) {
+	// @ManyToOne(fetch = FetchType.LAZY)
+	// @JoinColumn(name = "ticketInfo_id")
+	// private TicketInfo ticketInfo;
+
+	@Column(name = "ticketInfo_id")
+	private Long ticketInfoId;
+
+	// public Ticket(User user, TicketInfo ticketInfo, TicketRequestDto ticketRequestDto) {
+	// 	this.posX = ticketRequestDto.getPosX();
+	// 	this.posY = ticketRequestDto.getPosY();
+	// 	this.user = user;
+	// 	this.ticketInfo = ticketInfo;
+	// }
+
+	//Test을 위한 ticket 객체
+	public Ticket(Long userId, TicketRequestDto ticketRequestDto){
 		this.posX = ticketRequestDto.getPosX();
 		this.posY = ticketRequestDto.getPosY();
-		this.user = user;
-		this.ticketInfo = ticketInfo;
+		this.userId = userId;
+		this.ticketInfoId = ticketRequestDto.getTicketInfoId();
 	}
 }

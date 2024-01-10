@@ -15,13 +15,22 @@ public class TicketResponseDto {
 	Long posX;
 	Long posY;
 	Long userId;
-	TicketInfoResponseDto ticketInfo;
+	Long ticketInfoId;
+
+	// public TicketResponseDto(Ticket ticket) {
+	// 	this.ticketId = ticket.getTicketId();
+	// 	this.posX = ticket.getPosX();
+	// 	this.posY = ticket.getPosY();
+	// 	this.userId = ticket.getUser().getUserId();
+	// 	this.ticketInfo = new TicketInfoResponseDto(ticket.getTicketInfo());
+	// }
 
 	public TicketResponseDto(Ticket ticket) {
 		this.ticketId = ticket.getTicketId();
 		this.posX = ticket.getPosX();
 		this.posY = ticket.getPosY();
-		this.userId = ticket.getUser().getUserId();
-		this.ticketInfo = new TicketInfoResponseDto(ticket.getTicketInfo());
+		this.userId = ticket.getUserId();
+		this.ticketInfoId = ticket.getTicketInfoId();
+		//this.ticketInfo = new TicketInfoResponseDto(ticket.getTicketInfo());
 	}
 }

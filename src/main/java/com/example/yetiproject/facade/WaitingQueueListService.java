@@ -107,7 +107,7 @@ public class WaitingQueueListService {
             User user = User.builder().userId(queueObject.getUserId()).build();
 
             // 티켓 발급
-            ticketService.reserveTicketQueue(user, ticketRequestDto);
+            //ticketService.reserveTicketQueue(user, ticketRequestDto);
             // 티켓 개수 증가
             incrementTicketCounter(COUNT_KEY + queueObject.getTicketInfoId().toString());
             // 대기열 제거

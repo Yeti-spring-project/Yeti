@@ -45,7 +45,7 @@ public class TicketController {
 	// 예매 - redisson
 	@PostMapping("/reserve")
 	public ApiResponse reserveTicket(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody TicketRequestDto ticketRequestDto) {
-		return ApiResponse.success("예매가 완료되었습니다.", redissonLockTicketFacade.reserveTicket(userDetails, ticketRequestDto));
+		return ApiResponse.success("예매가 완료되었습니다.", redissonLockTicketFacade.reserveTicket(userDetails.getUser().getUserId(), ticketRequestDto));
 	}
 
 	// redis sortedset 날짜확인X, 좌석체크X
@@ -85,12 +85,10 @@ public class TicketController {
 		return waitingQueueSortedSetService.getRank(ticketInfoId, userId, posX, posY);
 	}
 
-
-
 	// 예매 취소
 	@DeleteMapping("/{ticketId}")
-	public ApiResponse cancelTicket(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable(name = "ticketId") Long ticketId){
-		return ApiResponse.success("예매 취소 완료" , ticketService.cancelUserTicket(userDetails.getUser(), ticketId));
+	public void cancelTicket(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable(name = "ticketId") Long ticketId){
+		//return ApiResponse.success("예매 취소 완료" , ticketService.cancelUserTicket(userDetails.getUser(), ticketId));
 	}
 
 }

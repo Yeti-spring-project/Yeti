@@ -42,7 +42,7 @@ public class TicketIssueListService {
 		}
 
 		// 티켓 일괄 발급
-		ticketService.reserveTicketsInBatchList(ticketRequests);
+		//ticketService.reserveTicketsInBatchList(ticketRequests);
 	}
 
 	public Long decrease(Long ticketInfoId){

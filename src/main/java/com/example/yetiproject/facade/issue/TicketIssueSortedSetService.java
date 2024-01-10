@@ -50,7 +50,7 @@ public class TicketIssueSortedSetService {
 			}
 
 			//reserve
-			ticketService.reserveTicketSortedSet(ticketRequestDto.getUserId(), ticketRequestDto);
+			//ticketService.reserveTicketSortedSet(ticketRequestDto.getUserId(), ticketRequestDto);
 
 			log.info("[예매완료] UserID = {} , posX = {}, poxY = {}", ticketRequestDto.getUserId(),
 				ticketRequestDto.getPosX(), ticketRequestDto.getPosY());
@@ -81,7 +81,7 @@ public class TicketIssueSortedSetService {
 
 			ticketRequestDtoList.add(ticketRequestDto);
 			//reserve
-			ticketService.reserveTicketSortedSet(ticketRequestDto.getUserId(), ticketRequestDto);
+			//ticketService.reserveTicketSortedSet(ticketRequestDto.getUserId(), ticketRequestDto);
 
 			log.info("[예매완료] UserID = {} , posX = {}, poxY = {}", ticketRequestDto.getUserId(),
 				ticketRequestDto.getPosX(), ticketRequestDto.getPosY());
@@ -93,7 +93,7 @@ public class TicketIssueSortedSetService {
 		}
 
 		// 티켓 일괄 발급
-		ticketService.reserveTicketsInBatch(ticketRequestDtoList);
+		//ticketService.reserveTicketsInBatch(ticketRequestDtoList);
 	}
 
 	public Long increase(Long ticketInfoId) {

@@ -37,7 +37,6 @@ public class UserService {
 
 		// 유저 객체를 만든 후 레포지토리에 저장
 		User user = new User(requestDto, password);
-//		user.updatePassword(bCryptPasswordEncoder.encode(requestDto.getPassword()));
 		userRepository.save(user);
 	}
 }
