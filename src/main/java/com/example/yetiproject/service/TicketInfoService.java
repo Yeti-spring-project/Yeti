@@ -28,10 +28,10 @@ public class TicketInfoService {
         TicketInfo ticketInfo = new TicketInfo(requestDto);
 
         // sports 찾기
-        Sports sports = findSportsInfo(requestDto.getSportsId());
-
-        // ticketInfo에 sports 추가
-        ticketInfo.setSports(sports);
+        // Sports sports = findSportsInfo(requestDto.getSportsId());
+        //
+        // // ticketInfo에 sports 추가
+        // ticketInfo.setSports(sports);
 
         ticketInfoRepository.save(ticketInfo);
         return new TicketInfoResponseDto(ticketInfo);

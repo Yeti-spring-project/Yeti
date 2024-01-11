@@ -26,6 +26,6 @@ public class TicketInfoResponseDto {
         this.closeDate = ticketInfo.getCloseDate();
         this.ticketPrice = ticketInfo.getTicketPrice();
         this.stock = ticketInfo.getStock();
-        this.sports = new SportsResponseDto(ticketInfo.getSports());
+        //this.sports = new SportsResponseDto(ticketInfo.getSports());
     }
 }

@@ -71,12 +71,12 @@ public class BookmarkService {
 		User user = userRepository.findById(userId).orElseThrow(
 			() -> new UserNotFoundException("회원정보가 없습니다."));
 
-		String sportName = bookmark.getTicketInfo().getSports().getSportName();
-		String gameDate = bookmark.getTicketInfo().getSports().getMatchDate();
+		// String sportName = bookmark.getTicketInfo().getSports().getSportName();
+		// String gameDate = bookmark.getTicketInfo().getSports().getMatchDate();
 		LocalDateTime openDate = bookmark.getTicketInfo().getOpenDate();
 		Duration diff = Duration.between(LocalDateTime.now(), openDate);
 		Long diffMins = diff.toMinutes();
-		String content = diffMins + "분 뒤 " + "[" + gameDate + " " + sportName + "] 경기의 예매가 시작됩니다.";
-		notificationService.send(content, user);
+		//String content = diffMins + "분 뒤 " + "[" + gameDate + " " + sportName + "] 경기의 예매가 시작됩니다.";
+		//notificationService.send(content, user);
 	}
 }

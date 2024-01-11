@@ -25,20 +25,22 @@ public class Ticket {
 	Long posX;
 	@Column(name="posY")
 	Long posY;
+	@Column(name = "user_id")
+	Long userId;
+	@Column(name = "ticketInfo_id")
+	private Long ticketInfoId;
 
 	// @ManyToOne(fetch = FetchType.LAZY)
 	// @JoinColumn(name = "user_id")
 	// private User user;
 
-	@Column(name = "user_id")
-	Long userId;
+
 
 	// @ManyToOne(fetch = FetchType.LAZY)
 	// @JoinColumn(name = "ticketInfo_id")
 	// private TicketInfo ticketInfo;
 
-	@Column(name = "ticketInfo_id")
-	private Long ticketInfoId;
+
 
 	// public Ticket(User user, TicketInfo ticketInfo, TicketRequestDto ticketRequestDto) {
 	// 	this.posX = ticketRequestDto.getPosX();

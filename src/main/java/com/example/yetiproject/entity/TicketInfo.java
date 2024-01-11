@@ -33,9 +33,15 @@ public class TicketInfo {
     @Column(nullable = false)
     private LocalDateTime closeDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "sports_id")
-    private Sports sports;
+    @Column(name = "sport_name")
+    private String sportName;
+
+    @Column(name = "match_date")
+    private LocalDateTime matchDate;
+
+    // @ManyToOne(fetch = FetchType.LAZY)
+    // @JoinColumn(name = "sports_id")
+    // private Sports sports;
 
     public TicketInfo(TicketInfoRequestDto ticketRequestDto) {
         this.ticketPrice = ticketRequestDto.getTicketPrice();

@@ -1,5 +1,5 @@
 ### 0.회원가입 - ADMIN
-POST http://13.209.247.218//api/user/signup
+POST http://localhost:8080/api/user/signup
 Content-Type: application/json
 
 {
@@ -16,7 +16,7 @@ POST http://localhost:8080/api/user/signin
 Content-Type: application/json
 
 {
-  "username":"administrator",
+  "username":"jungmin",
   "password":"@Qkrwjdals96"
 }
 
