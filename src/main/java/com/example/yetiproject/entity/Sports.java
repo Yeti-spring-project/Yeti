@@ -21,7 +21,7 @@ public class Sports {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long sportId;
     private String sportName;
-    private String matchDate;
+    private LocalDateTime matchDate;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "stadium_id")

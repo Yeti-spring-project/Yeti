@@ -1,5 +1,7 @@
 package com.example.yetiproject.dto.sports;
 
+import java.time.LocalDateTime;
+
 import com.example.yetiproject.entity.Sports;
 import com.example.yetiproject.entity.Stadium;
 import lombok.Getter;
@@ -12,7 +14,7 @@ import lombok.Setter;
 public class SportsResponseDto {
     private Long id;
     private String sportsName;
-    private String matchDate;
+    private LocalDateTime matchDate;
     private Long stadiumId;
     private String stadiumName;
 
