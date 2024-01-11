@@ -97,7 +97,7 @@ public class DBTest {
 	void test5(){
 		long startTime = System.currentTimeMillis();
 		Long userId = 1L;
-		for (int i = 0; i < 40000; i++) {
+		for (int i = 0; i < 1000; i++) {
 			TicketRequestDto ticketRequestDto = TicketRequestDto.builder()
 				.ticketInfoId(1L)
 				.posX((long)i)

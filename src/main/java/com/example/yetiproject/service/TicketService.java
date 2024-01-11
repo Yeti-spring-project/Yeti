@@ -39,9 +39,6 @@ public class TicketService {
 		ticketInfoRepository.findById(ticketRequestDto.getTicketInfoId()).get().updateStock(-1L);
 		Ticket ticket = new Ticket(userId, ticketRequestDto);
 		ticketRepository.save(ticket);
-
-		//ticketInfo.updateStock(-1L);
-
 		return new TicketResponseDto(ticket);
 	}
 

@@ -9,12 +9,17 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.jpa.repository.Lock;
+
 @Getter
 @Setter
 @Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicUpdate
 @Table(name = "ticket_info")
 public class TicketInfo {
     @Id
@@ -62,6 +67,7 @@ public class TicketInfo {
     }
 
     @Transactional
+    //@Lock(value = LockModeType.PESSIMISTIC_WRITE)
 	public void updateStock(Long amount) {
         if (this.stock + amount < 0) {
             throw new OutOfStockException("재고 소진");

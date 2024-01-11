@@ -34,8 +34,6 @@ public class Ticket {
 	// @JoinColumn(name = "user_id")
 	// private User user;
 
-
-
 	// @ManyToOne(fetch = FetchType.LAZY)
 	// @JoinColumn(name = "ticketInfo_id")
 	// private TicketInfo ticketInfo;
