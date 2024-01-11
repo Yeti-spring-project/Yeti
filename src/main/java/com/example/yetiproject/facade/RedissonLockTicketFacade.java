@@ -24,7 +24,6 @@ public class RedissonLockTicketFacade {
     public TicketResponseDto reserveTicket(Long userId, TicketRequestDto requestDto) {
         Long ticketInfoId = requestDto.getTicketInfoId();
         RLock lock = redissonClient.getLock(ticketInfoId.toString());
-        TicketResponseDto responseDto;
         log.info("lock 획득 시도");
         try {
             // lock 획득 시도 시간, lock 점유 시간
@@ -35,7 +34,7 @@ public class RedissonLockTicketFacade {
                 return new TicketResponseDto();
             }
             log.info("lock 획득 성공");
-            responseDto = ticketService.reserveTicket(userId, requestDto);
+            return ticketService.reserveTicket(userId, requestDto);
 
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
@@ -45,6 +44,5 @@ public class RedissonLockTicketFacade {
             }
         }
 
-        return responseDto;
     }
 }

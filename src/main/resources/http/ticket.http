@@ -3,7 +3,7 @@ POST http://localhost:8080/api/user/signin
 Content-Type: application/json
 
 {
-  "username":"administrator",
+  "username":"jungmin",
   "password":"@Qkrwjdals96"
 }
 > {%
@@ -20,7 +20,7 @@ Authorization: {{access_token}}
 GET http://localhost:8080/api/mytickets/ticketId/1
 Authorization: {{access_token}}
 
-### 3. local - 티켓 예매하기
+### 3. local - 티켓 예매하기 redisson
 POST http://localhost:8080/api/mytickets/reserve
 Content-Type: application/json
 Authorization: {{access_token}}
