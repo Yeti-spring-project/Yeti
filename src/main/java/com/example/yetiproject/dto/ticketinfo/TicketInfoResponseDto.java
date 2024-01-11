@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+import net.bytebuddy.asm.Advice;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,8 +19,8 @@ public class TicketInfoResponseDto {
     private LocalDateTime closeDate;
     private Long ticketPrice;
     private Long stock;
-    private SportsResponseDto sports;
-
+    private String sportName;
+    private LocalDateTime matchDate;
 
     public TicketInfoResponseDto(TicketInfo ticketInfo) {
         this.id = ticketInfo.getTicketInfoId();
@@ -26,6 +28,8 @@ public class TicketInfoResponseDto {
         this.closeDate = ticketInfo.getCloseDate();
         this.ticketPrice = ticketInfo.getTicketPrice();
         this.stock = ticketInfo.getStock();
+        this.sportName = ticketInfo.getSportName();
+        this.matchDate = ticketInfo.getMatchDate();
         //this.sports = new SportsResponseDto(ticketInfo.getSports());
     }
 }

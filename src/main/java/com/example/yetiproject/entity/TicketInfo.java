@@ -48,6 +48,8 @@ public class TicketInfo {
         this.stock = ticketRequestDto.getStock();
         this.openDate = ticketRequestDto.getOpenDate();
         this.closeDate = ticketRequestDto.getCloseDate();
+        this.sportName = ticketRequestDto.getSportName();
+        this.matchDate = ticketRequestDto.getMatchDate();
     }
 
     public void update(TicketInfoRequestDto requestDto) {

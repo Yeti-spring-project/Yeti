@@ -3,7 +3,7 @@ POST http://localhost:8080/api/user/signin
 Content-Type: application/json
 
 {
-  "username":"administrator",
+  "username":"jungmin",
   "password":"@Qkrwjdals96"
 }
 > {%
@@ -17,19 +17,20 @@ Content-Type: application/json
 Authorization: {{access_token}}
 
 {
-  "sportsId": 1,
   "ticketPrice": 10000,
-  "stock": 100,
+  "stock": 50000,
   "openDate": "2023-12-04T12:34:00",
-  "closeDate": "2023-12-31T12:34:00"
+  "closeDate": "2023-12-31T12:34:00",
+  "sportName" : "2023 K-리그 한국 vs 싱가포르",
+  "matchDate" : "2024-01-31T12:34:00"
 }
 
 ### 2. 티켓 조회
-GET http://localhost:8080/api/tickets/1
+GET http://localhost:8080/api/tickets/6
 Authorization: {{access_token}}
 
 ### 3. 티켓 정보 수정
-PUT http://localhost:8080/api/tickets/1
+PUT http://localhost:8080/api/tickets/6
 Authorization: {{access_token}}
 Content-Type: application/json
 
