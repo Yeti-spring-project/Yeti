@@ -30,6 +30,5 @@ public class TicketInfoResponseDto {
         this.stock = ticketInfo.getStock();
         this.sportName = ticketInfo.getSportName();
         this.matchDate = ticketInfo.getMatchDate();
-        //this.sports = new SportsResponseDto(ticketInfo.getSports());
     }
 }

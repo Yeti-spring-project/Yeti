@@ -57,6 +57,8 @@ public class TicketInfo {
         this.stock = requestDto.getStock();
         this.openDate = requestDto.getOpenDate();
         this.closeDate = requestDto.getCloseDate();
+        this.sportName = requestDto.getSportName();
+        this.matchDate = requestDto.getMatchDate();
     }
 
     @Transactional
