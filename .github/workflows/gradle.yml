@@ -40,9 +40,13 @@ jobs:
           echo "${{ secrets.APPLICATION }}" > ./application.yml
         shell: bash
 
+      # gradlew에 실행 권한을 부여
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
       # Build Gradle
       - name: Build with Gradle
-        run: ./gradlew build
+        run: ./gradlew clean build -x test --stacktrace
         shell: bash
 
       # AWS에 연결

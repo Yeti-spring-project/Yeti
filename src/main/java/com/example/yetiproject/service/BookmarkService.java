@@ -52,7 +52,7 @@ public class BookmarkService {
 		}
 	}
 
-	@Scheduled(cron = "0 0/15 * * * *")
+	//@Scheduled(cron = "0 0/15 * * * *")
 	@Transactional
 	public void notificationScheduler() {
 		log.info("스케쥴러에 의해 동작");

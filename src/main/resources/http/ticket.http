@@ -27,20 +27,18 @@ Authorization: {{access_token}}
 
 {
   "ticketInfoId" : 1,
-  "posX" : 12,
-  "posY" : 18
+  "seat" : "1A11"
 }
 
 
 ### 3-1. local - 티켓 예매하기(sortedset - 좌석, 날짜 체크 확인)
-POST http://localhost:8080/api/mytickets/reserve/queue/sortedset
+POST http://localhost:8080/api/mytickets/reserve/queue/list
 Content-Type: application/json
 Authorization: {{access_token}}
 
 {
   "ticketInfoId" : 1,
-  "posX" : 20,
-  "posY" : 21
+  "seat" : "1A14"
 }
 
 ### 3-1. local - 티켓 예매하기(sortedset - 좌석, 날짜 체크 확인)

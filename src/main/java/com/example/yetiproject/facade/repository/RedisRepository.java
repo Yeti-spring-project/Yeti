@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ScanOptions;
 import org.springframework.data.redis.core.ZSetOperations;
@@ -82,7 +83,6 @@ public class RedisRepository {
 	public Long listRightPush(String key, String value){
 		return redisTemplate.opsForList().rightPush(key, value);
 	}
-
 	public List<String> listRange(String key, long start, long end) {
 		return redisTemplate.opsForList().range(key, start, end);
 	}
@@ -93,6 +93,10 @@ public class RedisRepository {
 
 	public String listLeftPop(String key) {
 		return redisTemplate.opsForList().leftPop(key);
+	}
+
+	public Long llen(String key){
+		return redisTemplate.opsForList().size(key);
 	}
 
 	public Boolean hashSetNx(String key, String field, Long userId){

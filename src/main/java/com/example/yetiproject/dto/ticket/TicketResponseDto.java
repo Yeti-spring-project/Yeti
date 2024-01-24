@@ -12,15 +12,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TicketResponseDto {
 	Long ticketId;
-	Long posX;
-	Long posY;
+	String seat;
 	Long userId;
 	TicketInfoResponseDto ticketInfo;
 
 	public TicketResponseDto(Ticket ticket) {
 		this.ticketId = ticket.getTicketId();
-		this.posX = ticket.getPosX();
-		this.posY = ticket.getPosY();
+		this.seat = ticket.getSeat();
 		this.userId = ticket.getUser().getUserId();
 		this.ticketInfo = new TicketInfoResponseDto(ticket.getTicketInfo());
 	}

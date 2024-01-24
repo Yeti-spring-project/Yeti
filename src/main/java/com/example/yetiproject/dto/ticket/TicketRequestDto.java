@@ -10,8 +10,7 @@ import lombok.*;
 public class TicketRequestDto {
 	private Long userId;
 	private Long ticketInfoId;
-	private Long posX;
-	private Long posY;
+	private String seat;
 
 
 	public void setUserId(Long userId) {

@@ -21,10 +21,13 @@ public class Ticket {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	Long ticketId;
 
-	@Column(name="posX")
-	Long posX;
-	@Column(name="posY")
-	Long posY;
+	// @Column(name="posX")
+	// Long posX;
+	// @Column(name="posY")
+	// Long posY;
+
+	@Column(name="seat")
+	String seat;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id")
@@ -35,8 +38,7 @@ public class Ticket {
 	private TicketInfo ticketInfo;
 
 	public Ticket(User user, TicketInfo ticketInfo, TicketRequestDto ticketRequestDto) {
-		this.posX = ticketRequestDto.getPosX();
-		this.posY = ticketRequestDto.getPosY();
+		this.seat = ticketRequestDto.getSeat();
 		this.user = user;
 		this.ticketInfo = ticketInfo;
 	}
