@@ -1,21 +1,20 @@
 package com.example.yetiproject.facade.issue;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import com.example.yetiproject.dto.ticket.TicketRequestDto;
 import com.example.yetiproject.facade.repository.RedisRepository;
 import com.example.yetiproject.repository.TicketInfoRepository;
 import com.example.yetiproject.service.TicketService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.transaction.Transactional;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-@Slf4j(topic = "TicketIssueService")
+@Slf4j(topic = "TicketIssueListService")
 @Service
 @RequiredArgsConstructor
 public class TicketIssueListService {
@@ -60,9 +59,6 @@ public class TicketIssueListService {
 		}
 	}
 
-	public Long decrease(Long ticketInfoId){
-		return redisRepository.decrease(TICKETINFO_STOCK_COUNT.formatted(ticketInfoId));
-	}
 	public Long increase(Long ticketInfoId) {
 		return redisRepository.increase(TICKETINFO_STOCK_COUNT.formatted(ticketInfoId));
 	}

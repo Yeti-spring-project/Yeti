@@ -67,17 +67,6 @@ public class WaitingQueueSortedSetService {
 		}
 	}
 
-	public void getWaitingNumber() throws JsonProcessingException {
-		final long start = FIRST_ELEMENT;
-		final long end = LAST_ELEMENT;
-
-		Set<String> queue = redisRepository.zRange("ticket", start, end);
-		for ( String ticketRequest : queue) {
-			Long rank = redisRepository.zRank("ticket", ticketRequest);
-			//log.info("'{}'님의 현재 대기열은 {}명 남았습니다.", ticketRequest, rank);
-		}
-	}
-
 	public Long getRank(Long ticketInfoId, Long userId, String seat) throws JsonProcessingException {
 		String jsonObject = objectMapper.writeValueAsString(new TicketRequestDto(userId, ticketInfoId, seat));
 		Long rank = redisRepository.zRank(USER_QUEUE_WAIT_KEY.formatted(ticketInfoId), jsonObject);

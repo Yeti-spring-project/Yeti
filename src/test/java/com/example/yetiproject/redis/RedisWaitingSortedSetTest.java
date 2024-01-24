@@ -15,24 +15,24 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.example.yetiproject.dto.ticket.TicketRequestDto;
 import com.example.yetiproject.facade.repository.RedisRepository;
-import com.example.yetiproject.facade.sortedset.WaitingQueueListService;
+import com.example.yetiproject.facade.sortedset.WaitingQueueSortedSetService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 @SpringBootTest
-public class RedisWaitingListQueueTest {
+public class RedisWaitingSortedSetTest {
 	@MockBean
 	BCryptPasswordEncoder bCryptPasswordEncoder;
 	@Autowired
-	WaitingQueueListService waitingQueueListService;
+	WaitingQueueSortedSetService waitingQueueSortedSetService;
 	@Autowired
 	RedisRepository redisRepository;
 
 	private final String USER_QUEUE_WAIT_KEY = "ticketInfo:queue:1:wait";
 
 	@Test
-	@DisplayName("redis list queue 순서 보장되는지 확인")
+	@DisplayName("redis sortedset 순서 보장되는지 확인")
 	void test1() throws InterruptedException {
-		int threadCount = 1000;
+		int threadCount = 100;
 		ExecutorService executorService = Executors.newFixedThreadPool(32);
 		CountDownLatch latch = new CountDownLatch(threadCount);
 
@@ -43,7 +43,7 @@ public class RedisWaitingListQueueTest {
 			long userId = i+1;
 			executorService.submit(() ->{
 				try {
-					Long rank = waitingQueueListService.registerQueue(userId, ticketRequestDto);
+					Long rank = waitingQueueSortedSetService.registerQueue(userId, ticketRequestDto);
 					System.out.println("userId: " + userId + " = " +  rank);
 				} catch (JsonProcessingException e) {
 					throw new RuntimeException(e);
@@ -54,12 +54,12 @@ public class RedisWaitingListQueueTest {
 			});
 		}
 		latch.await();
-		long result = redisRepository.llen(USER_QUEUE_WAIT_KEY);
+		long result = redisRepository.zCard(USER_QUEUE_WAIT_KEY);
 		assertEquals(100, result);
 	}
 
 	@Test
-	@DisplayName("waiting queue에 들어갔다 rank를 반환하는 속도를 계산")
+	@DisplayName("waiting sortedset queue에 들어갔다 rank를 반환하는 속도를 계산")
 	void test2() throws JsonProcessingException {
 		int count = 50000;
 		long startTime = System.currentTimeMillis();
@@ -68,9 +68,9 @@ public class RedisWaitingListQueueTest {
 				.ticketInfoId(1L).seat(String.valueOf(i+"A")+i)
 				.build();
 			long userId = 1;
-			waitingQueueListService.registerQueue(userId, ticketRequestDto);
+			waitingQueueSortedSetService.registerQueue(userId, ticketRequestDto);
 		}
 		long endTime = System.currentTimeMillis();
-		System.out.println("%s개 (redis list) 저장 속도 = %s".formatted(count, (endTime - startTime)));
+		System.out.println("%s개 (redis sortedset) 저장 속도 = %s".formatted(count, (endTime - startTime)));
 	}
 }

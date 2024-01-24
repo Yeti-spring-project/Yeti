@@ -51,7 +51,7 @@ public class WaitingQueueListService {
         ticketRequestDto.setUserId(userId); //user 추가
 
         String jsonObject = objectMapper.writeValueAsString(ticketRequestDto);
-        //log.info("대기열에 추가 - userId : {} requestDto : {}", ticketRequestDto.getUserId(), jsonObject);
+        log.info("대기열에 추가 - userId : {} requestDto : {}", ticketRequestDto.getUserId(), jsonObject);
 
         redisRepository.listRightPush(USER_QUEUE_WAIT_KEY.formatted(ticketRequestDto.getTicketInfoId()), jsonObject);
         return redisRepository.indexOfRank(USER_QUEUE_WAIT_KEY.formatted(ticketRequestDto.getTicketInfoId()),jsonObject)+1;
@@ -79,19 +79,6 @@ public class WaitingQueueListService {
 
     private boolean checkSelectedSeat(String key, String seat, Long userId){
         return redisRepository.hashSetNx(key, seat, userId);
-    }
-
-    public void getWaitingNumber(Long ticketInfoId) {
-        final long start = FIRST_ELEMENT;
-        final long end = LAST_ELEMENT;
-
-        Set<String> queue = redisRepository.zRange(TICKETINFO_STOCK_COUNT.formatted(ticketInfoId), start, end);
-
-        // 대기열 상황
-        for (String data : queue) {
-            Long rank = redisRepository.zRank(TICKETINFO_STOCK_COUNT.formatted(ticketInfoId), data);
-           //log.info("'{}'님의 현재 대기열은 {}명 남았습니다.", data, rank);
-        }
     }
 
 }
